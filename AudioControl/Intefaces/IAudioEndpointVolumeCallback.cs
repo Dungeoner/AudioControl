@@ -6,6 +6,6 @@ namespace AudioControl.Intefaces
 	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface IAudioEndpointVolumeCallback
 	{
-		void OnNotify();
+		void OnNotify(AUDIO_VOLUME_NOTIFICATION_DATA notificationData);
 	}
 }
