@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,13 +12,11 @@ namespace AudioControl
 	internal class DeviceManager
 	{
 		private readonly Dictionary<string, IMMDevice> _deviceCollection;
+		private AudioEndpointVolumeCallback DeviceCallback { get; set; }
 
 		[DllImport("ole32.dll")]
-		private static extern int CoCreateInstance([MarshalAs(UnmanagedType.LPStruct)] Guid rclsid, IntPtr pUnkOuter, tagCLSCTX dwClsContext, [MarshalAs(UnmanagedType.LPStruct)] Guid riid, out IntPtr ppv);
-
-		[DllImport("ole32.dll")]
-		private static extern void CoTaskMemFree(IntPtr pv);
-
+		private static extern int CoCreateInstance([MarshalAs(UnmanagedType.LPStruct)] Guid rclsid, IntPtr pUnkOuter,
+			tagCLSCTX dwClsContext, [MarshalAs(UnmanagedType.LPStruct)] Guid riid, out IntPtr ppv);
 		public DeviceManager()
 		{
 			_deviceCollection = new Dictionary<string, IMMDevice>();
@@ -25,19 +24,20 @@ namespace AudioControl
 
 		internal IEnumerable<string> ObtainDeviceCollection()
 		{
-			int result = CoCreateInstance(new Guid(Guids.MMDeviceEnumeratorCLSIDString), IntPtr.Zero, tagCLSCTX.CLSCTX_INPROC_SERVER, new Guid(Guids.IMMDeviceEnumeratorIIDString), out IntPtr enumeratorPtr);
-			//if (result != 0)
-			//{
-			//	Console.WriteLine("Failed to create device enumerator. Error code: " + result);
-			//	return;
-			//}
+			int result = CoCreateInstance(new Guid(Guids.MMDeviceEnumeratorCLSIDString), IntPtr.Zero, tagCLSCTX.CLSCTX_INPROC_SERVER,
+				new Guid(Guids.IMMDeviceEnumeratorIIDString), out IntPtr enumeratorPtr);
+			if (result != 0)
+			{
+				Console.WriteLine("Failed to create device enumerator. Error code: " + result);
+				return Enumerable.Empty<string>();
+			}
 			var enumerator = (IMMDeviceEnumerator)Marshal.GetObjectForIUnknown(enumeratorPtr);
 			result = enumerator.EnumAudioEndpoints(EDataFlow.eCapture, 0x00000001, out IMMDeviceCollection deviceCollection);
-			//if (result != 0)
-			//{
-			//	Console.WriteLine("Failed to get audio collection. Error code: " + result);
-			//	return;
-			//}
+			if (result != 0)
+			{
+				Console.WriteLine("Failed to get audio collection. Error code: " + result);
+				return Enumerable.Empty<string>();
+			}
 			result = deviceCollection.GetCount(out int deviceCount);
 			for (int i = 0; i < deviceCount; i++)
 			{
@@ -52,13 +52,14 @@ namespace AudioControl
 			return _deviceCollection.Select(x => x.Key);
 		}
 
-		internal bool SetTargetGainForDevice(string deviceName, float gainLevel = 0.79f)
+		internal bool SetTargetGainForDevice(string deviceName, float gainLevel)
 		{
 			_deviceCollection.TryGetValue(deviceName, out IMMDevice device);
 			if (device == null) return false;
 			var iAdioEndpointVolume = typeof(IAudioEndpointVolume).GUID;
 			device.Activate(ref iAdioEndpointVolume, 0, IntPtr.Zero, out object endpointVolumeInterface);
 			IAudioEndpointVolume endpointVolume = (IAudioEndpointVolume)endpointVolumeInterface;
+			endpointVolume.SetMasterVolumeLevelScalar(gainLevel, Guid.Empty);
 			RegisterCallBackForDevice(endpointVolume, (notificationData) =>
 			{
 				if (notificationData.fMasterVolume != gainLevel)
@@ -67,15 +68,21 @@ namespace AudioControl
 					Console.WriteLine("Gain level changed back");
 				}
 			});
+			_deviceCollection.Clear();
 			return true;
 		}
 
 		private void RegisterCallBackForDevice(IAudioEndpointVolume endpointVolume, Action<AUDIO_VOLUME_NOTIFICATION_DATA> callBack)
 		{
-			
-			var deviceCallback = new AudioEndpointVolumeCallback();
-			deviceCallback.OnNotifyCallback += callBack;
-			endpointVolume.RegisterControlChangeNotify(deviceCallback);
+			if(DeviceCallback == null)
+			{
+				DeviceCallback = new AudioEndpointVolumeCallback();
+				DeviceCallback.OnNotifyCallback = callBack;
+				endpointVolume.RegisterControlChangeNotify(DeviceCallback);
+			} else
+			{
+				DeviceCallback.OnNotifyCallback = callBack;
+			}			
 		}
 
 		private string GetDevicePropertyValue(IMMDevice device, PROPERTYKEY propertyKey)

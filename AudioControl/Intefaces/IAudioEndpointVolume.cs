@@ -7,7 +7,7 @@ namespace AudioControl.Intefaces
 	internal interface IAudioEndpointVolume
 	{
 		internal int RegisterControlChangeNotify(IAudioEndpointVolumeCallback callback);
-		int UnregisterControlChangeNotify(IntPtr pNotify);
+		int UnregisterControlChangeNotify(IAudioEndpointVolumeCallback callback);
 		int GetChannelCount(out uint pnChannelCount);
 		int SetMasterVolumeLevel(float fLevelDB, Guid pguidEventContext);
 		int SetMasterVolumeLevelScalar(float fLevel, Guid pguidEventContext);
