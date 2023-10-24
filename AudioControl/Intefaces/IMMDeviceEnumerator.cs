@@ -1,8 +1,9 @@
 ﻿using System.Runtime.InteropServices;
+using AudioControl.Enum;
 
 namespace AudioControl.Intefaces
 {
-	[Guid(Guids.IMMDeviceEnumeratorIIDString)]
+    [Guid(Guids.IMMDeviceEnumeratorIIDString)]
 	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface IMMDeviceEnumerator
 	{

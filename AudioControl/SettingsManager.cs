@@ -1,16 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
+using AudioControl.Models;
 
 namespace AudioControl
 {
-	internal class SettingsManager
+    internal class SettingsManager
 	{
-		private const string SettingsFilePath = "settings.json";
+		private string SettingsFolderPath
+		{
+			get
+			{
+				return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "AudioControl");
+			}
+		}
+		private string SettingsFilePath
+		{
+			get
+			{
+				return Path.Combine(SettingsFolderPath, "settings.json");
+			}
+		}
+		public SettingsModel CurrentDevice { get; set; }
 		internal bool IsSavedExists()
 		{
 			return File.Exists(SettingsFilePath);
@@ -18,11 +27,23 @@ namespace AudioControl
 		internal SettingsModel ReadSettings()
 		{
 			var content = File.ReadAllText(SettingsFilePath);
-			return JsonSerializer.Deserialize<SettingsModel>(content)?? new SettingsModel();
+			var settings = JsonSerializer.Deserialize<SettingsModel>(content);
+			if (settings != null) {
+				CurrentDevice = settings;
+				return settings;
+			} else
+			{
+				return new SettingsModel();
+			}
 		}
 		internal void WriteSettings(SettingsModel settingsModel)
 		{
+			CurrentDevice = settingsModel;
 			string content = JsonSerializer.Serialize(settingsModel);
+			if (!Directory.Exists(SettingsFolderPath))
+			{
+				Directory.CreateDirectory(SettingsFolderPath);
+			}			
 			File.WriteAllText(SettingsFilePath, content);
 		}
 	}

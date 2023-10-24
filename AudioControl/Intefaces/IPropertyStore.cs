@@ -1,8 +1,9 @@
 ﻿using System.Runtime.InteropServices;
+using AudioControl.Models;
 
 namespace AudioControl.Intefaces
 {
-	[Guid(Guids.IPropertyStoreIIDString)]
+    [Guid(Guids.IPropertyStoreIIDString)]
 	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface IPropertyStore
 	{

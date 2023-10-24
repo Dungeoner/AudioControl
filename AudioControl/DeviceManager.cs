@@ -1,15 +1,11 @@
-﻿using AudioControl.Intefaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
+﻿using AudioControl.Enum;
+using AudioControl.Intefaces;
+using AudioControl.Models;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AudioControl
 {
-	internal class DeviceManager
+    internal class DeviceManager
 	{
 		private readonly Dictionary<string, IMMDevice> _deviceCollection;
 		private AudioEndpointVolumeCallback DeviceCallback { get; set; }

@@ -1,43 +1,64 @@
-﻿namespace AudioControl
+﻿using AudioControl.Models;
+
+namespace AudioControl
 {
-	public class Program
+    public class Program
 	{
 		public static void Main(string[] args)
 		{
-			var deviceManager = new DeviceManager();
-			var settingsManager = new SettingsManager();
-			if (settingsManager.IsSavedExists())
+			try
 			{
-				var settings = settingsManager.ReadSettings();
-				if (ApplySettigs(settings, deviceManager))
+				var deviceManager = new DeviceManager();
+				var settingsManager = new SettingsManager();
+				if (settingsManager.IsSavedExists())
 				{
-					Console.WriteLine($"Device {settings.DeviceName} set to {settings.GainLevel}");
+					var settings = settingsManager.ReadSettings();
+					if (ApplySettigs(settings, deviceManager))
+					{
+						Console.WriteLine($"Device {settings.DeviceName} set to {settings.GainLevel}");
+					}
+					else
+					{
+						Console.WriteLine("Can't load settings");
+					}
 				}
 				else
 				{
-					Console.WriteLine("Can't load settings");
+					SelectDevice(deviceManager, settingsManager);
 				}
-			} else
-			{
-				SelectDevice(deviceManager, settingsManager);
-			}
-			bool running = true;
-			do
-			{
-				string cmd = Console.ReadLine();
-				switch (cmd.ToLower())
+				bool running = true;
+				do
 				{
-					case "select" : SelectDevice(deviceManager, settingsManager);
-						break;
-					case "exit" : running= false;
-						break;
-					case "help":
-						Console.WriteLine("'select for select device'");
-						Console.WriteLine("'exit for stop app'");
-						break;
+					string cmd = Console.ReadLine();
+					switch (cmd.ToLower())
+					{
+						case "select":
+							SelectDevice(deviceManager, settingsManager);
+							break;
+						case "exit":
+							running = false;
+							break;
+						case "mute":
+							Mute(deviceManager, settingsManager);
+							break;
+						case "unmute":
+							Unmute(deviceManager, settingsManager);
+							break;
+						case "help":
+							Console.WriteLine("'select for select device'");
+							Console.WriteLine("'exit for stop app'");
+							break;
+						default : 
+							Console.WriteLine("Wtf");
+							break;
+					}
 				}
+				while (running);
+			} catch(Exception ex)
+			{
+				Console.WriteLine(ex.ToString());
+				Console.ReadKey();
 			}
-			while (running);
 		}
 
 		private static bool ApplySettigs(SettingsModel settings, DeviceManager deviceManager)
@@ -91,6 +112,20 @@
 			}
 			Console.WriteLine("Wrong console input");
 			return false;
+		}
+
+		private static bool Mute(DeviceManager deviceManager, SettingsManager settingsManager)
+		{
+			if(settingsManager.CurrentDevice != null)
+			{
+				return deviceManager.SetTargetGainForDevice(settingsManager.CurrentDevice.DeviceName, 0);
+			}
+			return false;
+		}
+
+		private static bool Unmute(DeviceManager deviceManager, SettingsManager settingsManager)
+		{
+			return deviceManager.SetTargetGainForDevice(settingsManager.CurrentDevice.DeviceName, settingsManager.CurrentDevice.GainLevel);
 		}
 	}
 }
