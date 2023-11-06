@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace AudioControl.Intefaces
 {
-    internal interface IAudioDeviceManager
+    public interface IAudioDeviceManager
     {
-
+        public IEnumerable<IAudioDevice> ObtainDeviceCollection();
     }
 }

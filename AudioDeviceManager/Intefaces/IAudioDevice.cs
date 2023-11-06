@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace AudioControl.Intefaces
 {
-    internal interface IAudioDevice
+    public interface IAudioDevice
     {
         string Name { get; }
-        int Gain { get; set; }
+        void SetTargetGainForDevice(float gainLevel);
+        void SetMute(bool isMute);
     }
 }
