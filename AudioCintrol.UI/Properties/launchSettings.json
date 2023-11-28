@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "AudioCintrol.UI (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "AudioCintrol.UI (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

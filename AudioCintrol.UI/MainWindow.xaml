@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="AudioControl.UI.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:AudioControl.UI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:AudioControl.Intefaces="using:AudioControl.Intefaces"
+    mc:Ignorable="d">
+
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <ListView 
+            ItemsSource="{x:Bind Devices}">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="AudioControl.Intefaces:IAudioDevice">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="{x:Bind Name}"></TextBlock>
+                        <TextBlock Text="{x:Bind Gain.ToString()}"></TextBlock>
+                        <TextBlock Text="{x:Bind IsMuted.ToString()}"></TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackPanel>
+</Window>
