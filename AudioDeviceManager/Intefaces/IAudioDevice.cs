@@ -9,6 +9,8 @@ namespace AudioControl.Intefaces
     public interface IAudioDevice
     {
         string Name { get; }
+        float Gain { get; }
+        bool IsMuted { get; }
         void SetTargetGainForDevice(float gainLevel);
         void SetMute(bool isMute);
     }
