@@ -5,7 +5,7 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioDeviceManager", "AudioDeviceManager\AudioDeviceManager.csproj", "{E06D064A-801F-4981-9670-F880A27D1974}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioControl.UI", "AudioCintrol.UI\AudioControl.UI.csproj", "{F3437B50-98C8-4551-B902-FC17AA04C4EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioControl.UI", "AudioControl.UI\AudioControl.UI.csproj", "{F3437B50-98C8-4551-B902-FC17AA04C4EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
