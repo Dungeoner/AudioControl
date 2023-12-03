@@ -28,7 +28,7 @@ namespace AudioDeviceManager
                 {
                     throw new Exception("Failed to get device state. Error code: " + result);
                 }
-                else return gainLevel * 100;
+                else return gainLevel;
             }
         }
         public bool IsMuted
