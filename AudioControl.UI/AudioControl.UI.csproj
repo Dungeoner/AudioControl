@@ -11,6 +11,11 @@
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Assets\mic-fill.svg" />
+    <None Remove="Assets\mic-mute-fill.svg" />
+    <None Remove="DeviceControl.xaml" />
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -39,6 +44,19 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AudioDeviceManager\AudioDeviceManager.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="Assets\mic-fill.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\mic-mute-fill.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="DeviceControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <!-- 

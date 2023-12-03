@@ -2,6 +2,7 @@
 using Castle.Windsor;
 using Microsoft.UI.Xaml;
 using AudioDeviceManager;
+using Microsoft.UI;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -33,6 +34,7 @@ namespace AudioControl.UI
             container.Register(Castle.MicroKernel.Registration.Component.For<IAudioDeviceManager>().ImplementedBy<DeviceManager>());
             m_window = container.Resolve<MainWindow>();
             m_window.Activate();
+            m_window.AppWindow.Resize(new Windows.Graphics.SizeInt32(800, 250));
         }
 
         private Window m_window;
