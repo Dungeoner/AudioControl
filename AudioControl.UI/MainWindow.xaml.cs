@@ -1,5 +1,8 @@
-using AudioCintrol.UI.Models;
+using AudioControl.UI.Models;
 using AudioControl.Intefaces;
+using AudioDevice.Utility;
+using Castle.Windsor;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -26,12 +29,13 @@ namespace AudioControl.UI
     /// </summary>
     public sealed partial class MainWindow : Window
     {
-
         public ObservableCollection<Device> Devices;
 
-        public MainWindow(IAudioDeviceManager deviceManager)
+        public MainWindow()
         {
+            
             this.InitializeComponent();
+            var deviceManager = Ioc.Default.GetService<IAudioDeviceManager>();
             Devices = new ObservableCollection<Device>(deviceManager.ObtainDeviceCollection().Select(x => new Device(x)));
         }
     }

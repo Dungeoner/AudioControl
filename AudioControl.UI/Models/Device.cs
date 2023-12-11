@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AudioCintrol.UI.Models
+namespace AudioControl.UI.Models
 {
     public class Device
     {

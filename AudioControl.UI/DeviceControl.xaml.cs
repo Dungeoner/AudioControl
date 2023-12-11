@@ -1,6 +1,10 @@
 
-using AudioCintrol.UI.Models;
+using AudioControl.UI;
+using AudioControl.UI.Models;
 using AudioControl.Intefaces;
+using AudioControl.Models;
+using AudioDevice.Utility;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.ComponentModel;
@@ -12,19 +16,11 @@ namespace AudioControl.UI
 {
     public sealed partial class DeviceControl : UserControl, INotifyPropertyChanged
     {
-
-        //public static readonly DependencyProperty DeviceProperty = DependencyProperty.Register(
-        //    nameof(Device), typeof(Device), typeof(DeviceControl), new PropertyMetadata(null));
-
-        //public Device Device
-        //{
-        //    get
-        //    { return (Device)GetValue(DeviceProperty); }
-        //    set { SetValue(DeviceProperty, value); }
-        //}
         private Device _device;
 
         private string _imageSource;
+
+        public ISettingsManager SettingsManager { get; set; }
 
         public Device Device
         {
@@ -32,24 +28,27 @@ namespace AudioControl.UI
             set
             {
                 _device = value;
+                LoadSettings();
                 RaisePropertyChanged(nameof(Device));
-                ImageSource = Device.IsMuted ? "Assets/mic-mute-fill.svg" : "/Assets/mic-fill.svg";
+                ImageSource = _device.IsMuted ? IconsPath.MicMutedIcon : IconsPath.MicIcon;
             }
         }
 
         public string ImageSource
         {
-            get { return _imageSource?? "/Assets/mic-fill.svg"; }
+            get { return _imageSource?? IconsPath.MicIcon; }
             set
             {
                 _imageSource = value;
                 RaisePropertyChanged(nameof(ImageSource));
             }
-        } //Device.IsMuted ? "Assets/mic-mute-fill.svg" : "/Assets/mic-fill.svg";
+        }
 
         public DeviceControl()
         {
             this.InitializeComponent();
+            this.Resources = Resources;
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -62,12 +61,31 @@ namespace AudioControl.UI
         private void ButtonMute_Click(object sender, RoutedEventArgs e)
         {
             Device.Mute();
-            ImageSource = Device.IsMuted ? "Assets/mic-mute-fill.svg" : "/Assets/mic-fill.svg";
+            ImageSource = Device.IsMuted ? IconsPath.MicMutedIcon : IconsPath.MicIcon;
         }
 
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
+            var settigsModel = new DeviceSettingsModel
+            {
+                Name = Device.Name,
+                Gain = Device.Gain,
+                IsMuted = Device.IsMuted
+            };
+            Ioc.Default.GetService<ISettingsManager>().SaveSettings(settigsModel);
+        }
 
+        private void LoadSettings()
+        {
+            var settings = Ioc.Default.GetService<ISettingsManager>().LoadSettings(_device.Name);
+            if (settings != null)
+            {
+                _device.Gain = settings.Gain;
+                if(_device.IsMuted != settings.IsMuted)
+                {
+                    _device.Mute();
+                }
+            }
         }
     }
 }

@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioDeviceManager", "Audio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioControl.UI", "AudioControl.UI\AudioControl.UI.csproj", "{F3437B50-98C8-4551-B902-FC17AA04C4EA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioDevice.Utility", "AudioDevice.Utility\AudioDevice.Utility.csproj", "{B9A82DBC-00AA-4CD7-B1B3-A7E2E4EF6AEF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,22 @@ Global
 		{F3437B50-98C8-4551-B902-FC17AA04C4EA}.Release|x86.ActiveCfg = Release|x86
 		{F3437B50-98C8-4551-B902-FC17AA04C4EA}.Release|x86.Build.0 = Release|x86
 		{F3437B50-98C8-4551-B902-FC17AA04C4EA}.Release|x86.Deploy.0 = Release|x86
+		{B9A82DBC-00AA-4CD7-B1B3-A7E2E4EF6AEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9A82DBC-00AA-4CD7-B1B3-A7E2E4EF6AEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9A82DBC-00AA-4CD7-B1B3-A7E2E4EF6AEF}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{B9A82DBC-00AA-4CD7-B1B3-A7E2E4EF6AEF}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{B9A82DBC-00AA-4CD7-B1B3-A7E2E4EF6AEF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B9A82DBC-00AA-4CD7-B1B3-A7E2E4EF6AEF}.Debug|x64.Build.0 = Debug|Any CPU
+		{B9A82DBC-00AA-4CD7-B1B3-A7E2E4EF6AEF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B9A82DBC-00AA-4CD7-B1B3-A7E2E4EF6AEF}.Debug|x86.Build.0 = Debug|Any CPU
+		{B9A82DBC-00AA-4CD7-B1B3-A7E2E4EF6AEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9A82DBC-00AA-4CD7-B1B3-A7E2E4EF6AEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9A82DBC-00AA-4CD7-B1B3-A7E2E4EF6AEF}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{B9A82DBC-00AA-4CD7-B1B3-A7E2E4EF6AEF}.Release|ARM64.Build.0 = Release|Any CPU
+		{B9A82DBC-00AA-4CD7-B1B3-A7E2E4EF6AEF}.Release|x64.ActiveCfg = Release|Any CPU
+		{B9A82DBC-00AA-4CD7-B1B3-A7E2E4EF6AEF}.Release|x64.Build.0 = Release|Any CPU
+		{B9A82DBC-00AA-4CD7-B1B3-A7E2E4EF6AEF}.Release|x86.ActiveCfg = Release|Any CPU
+		{B9A82DBC-00AA-4CD7-B1B3-A7E2E4EF6AEF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

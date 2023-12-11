@@ -1,9 +1,9 @@
 {
   "profiles": {
-    "AudioCintrol.UI (Package)": {
+    "AudioControl.UI (Package)": {
       "commandName": "MsixPackage"
     },
-    "AudioCintrol.UI (Unpackaged)": {
+    "AudioControl.UI (Unpackaged)": {
       "commandName": "Project"
     }
   }
