@@ -1,0 +1,22 @@
+﻿<Application x:Class="AudioControl.WpfUi.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:viewModel="clr-namespace:AudioControl.WpfUi.MVVM.ViewModel"
+             xmlns:view="clr-namespace:AudioControl.WpfUi.MVVM.View">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/MenuButtonTheme.xaml"/>
+                <ResourceDictionary Source="Themes/ButtonTheme.xaml"/>
+                <ResourceDictionary Source="Themes/VolumeSliderTheme.xaml"/>
+                <ResourceDictionary Source="Resources/ImageResources.xaml"/>
+                <ResourceDictionary Source="Resources/Convertors.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate DataType="{x:Type viewModel:DeviceCategoryViewModel}">
+                <view:DeviceCategoryView/>
+            </DataTemplate>
+            
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

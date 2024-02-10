@@ -1,0 +1,7 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <BitmapImage x:Key="MicPng" UriSource="../Assets/mic-fill.png"></BitmapImage>
+    <BitmapImage x:Key="MicMutedPng" UriSource="../Assets/mic-mute-fill.png"></BitmapImage>
+    <BitmapImage x:Key="VolumePng" UriSource="../Assets/volume-up-fill.png"></BitmapImage>
+    <BitmapImage x:Key="SavePng" UriSource="../Assets/floppy-fill.png"></BitmapImage>
+</ResourceDictionary>
