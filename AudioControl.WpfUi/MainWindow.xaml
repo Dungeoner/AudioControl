@@ -3,6 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AudioControl.WpfUi"
+        xmlns:view="clr-namespace:AudioControl.WpfUi.MVVM.View"
+        xmlns:viewModel="clr-namespace:AudioControl.WpfUi.MVVM.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         WindowStyle="None"
@@ -10,7 +13,50 @@
         Background="Transparent"
         AllowsTransparency="True">
 
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
+    
     <Border Background="#1e192c"
             CornerRadius="10">
+        <Grid Margin="0, 20,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <RadioButton
+                    Height="90"
+                    Width="90"
+                    IsChecked="True"
+                    Margin="0, 5, 0, 15"
+                    Style="{StaticResource MenuButtonTheme}"
+                    Command="{Binding InputDevicesCommand}">
+                    <RadioButton.Content>
+                        <Image Source="{StaticResource MicPng}"
+                               Margin="8"/>
+                    </RadioButton.Content>
+                </RadioButton>
+                <RadioButton
+                    Height="90"
+                    Width="90"
+                    Margin="15, 0"
+                    Style="{StaticResource MenuButtonTheme}"
+                    Command="{Binding OutputDevicesCommand}">
+                    <RadioButton.Content>
+                        <Image Source="Assets/volume-up-fill.png"
+                               Margin="8"/>
+                    </RadioButton.Content>
+                </RadioButton>
+            </StackPanel>
+            <ContentControl Grid.Column="1"
+                                     Margin="0, 5, 5, 5"
+                                     Content="{Binding CurrentView}"/>
+        </Grid>
     </Border>
 </Window>

@@ -9,7 +9,7 @@ namespace AudioDevice.Utility
     public class DeviceSettingsModel
     {
         public string Name { get; set; }
-        public double Gain { get; set; }
+        public int Gain { get; set; }
         public bool IsMuted { get; set; }
     }
 }

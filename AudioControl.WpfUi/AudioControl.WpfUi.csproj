@@ -9,11 +9,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\floppy-fill.png" />
+    <None Remove="Assets\floppy-fill.svg" />
     <None Remove="Assets\mic-fill.png" />
+    <None Remove="Assets\mic-mute-fill.png" />
+    <None Remove="Assets\mic-mute-fill.svg" />
     <None Remove="Assets\pci-card-sound.ico" />
     <None Remove="Assets\pci-card-sound.png" />
     <None Remove="Assets\pci-card-sound.svg" />
     <None Remove="Assets\volume-up-fill.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\floppy-fill.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\mic-mute-fill.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +43,15 @@
 
   <ItemGroup>
     <Folder Include="MVVM\Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AudioDevice.Utility\AudioDevice.Utility.csproj" />
+    <ProjectReference Include="..\AudioDeviceManager\AudioDeviceManager.csproj" />
   </ItemGroup>
 
 </Project>
