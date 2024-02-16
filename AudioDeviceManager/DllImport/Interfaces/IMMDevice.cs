@@ -8,6 +8,7 @@ namespace AudioControl.Intefaces
 	internal interface IMMDevice
 	{
 		internal int Activate(ref Guid iid, int dwClsCtx, IntPtr pActivationParams, [MarshalAs(UnmanagedType.IUnknown)] out object ppInterface);
-		internal int OpenPropertyStore(EStgmAccess eStgmAccess, out IPropertyStore propertyStore);
+        internal int OpenPropertyStore(EStgmAccess eStgmAccess, out IPropertyStore propertyStore);
+		internal int GetId([Out, MarshalAs(UnmanagedType.LPWStr)]out string pwstrDeviceId);
 	}
 }

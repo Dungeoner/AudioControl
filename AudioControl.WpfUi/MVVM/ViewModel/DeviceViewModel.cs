@@ -19,6 +19,8 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
 
         private string _imageSource;
 
+        public string Id => _device.Id;
+
         public string Name => _device.Name;
 
         public bool IsMuted
@@ -76,12 +78,6 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
             });
             LoadSettings();
         }
-
-        //public void Mute()
-        //{
-        //    _device.SetMute(!_device.IsMuted);
-        //    ImageSource = _device.IsMuted ? "//Assets/mic-fill.png" : "//Assets/mic-mute-fill.png";
-        //}
 
         public void Save()
         {

@@ -5,10 +5,10 @@ namespace AudioControl.Intefaces
 {
     [Guid(Guids.IPropertyStoreIIDString)]
 	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-	internal interface IPropertyStore
+	public interface IPropertyStore
 	{
 		internal int GetCount(out int propertyCount);
-		internal int GetAt(int propertyIndex, out PROPERTYKEY propertyKey);
-		internal int GetValue(ref PROPERTYKEY propertyKey, out PROPVARIANT propertyValue);
+		internal int GetAt(int propertyIndex, out PropertyKey propertyKey);
+		internal int GetValue(ref PropertyKey propertyKey, out PropertyValue propertyValue);
 	}
 }
