@@ -13,7 +13,8 @@ namespace AudioDeviceManager
         private readonly IMMDevice _immDevice;
         private IAudioEndpointVolume _audioEndpointVolume;
         internal AudioEndpointVolumeCallback DeviceCallback { get;}
-        internal AudioDevice(string name, IMMDevice device) { 
+        internal AudioDevice(string id, string name, IMMDevice device) { 
+            Id = id;
             Name = name;
             _immDevice = device;
             DeviceCallback = new AudioEndpointVolumeCallback();
@@ -43,6 +44,8 @@ namespace AudioDeviceManager
                 else return isMuted;
             }
         }
+
+        public string Id { get; }
 
         public void SetTargetGainForDevice(float gainLevel)
         {

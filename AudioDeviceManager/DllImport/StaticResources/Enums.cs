@@ -1,11 +1,10 @@
 ﻿namespace AudioControl.Enum
 {
-    internal enum EDataFlow
+    public enum EDataFlow
     {
         eRender,
         eCapture,
-        eAll,
-        EDataFlow_enum_count
+        eAll
     }
 
     internal enum ERole
@@ -26,6 +25,16 @@
     internal enum EPid : int
     {
         PID_FRIENDLY_NAME = 14
+    }
+
+    [Flags]
+    public enum DeviceState : uint
+    {
+        Active = 0x00000001,
+        Disabled = 0x00000002,
+        NotPresent = 0x00000004,
+        Unplugged = 0x00000008,
+        MaskAll = 0x0000000F
     }
 
     internal enum tagCLSCTX

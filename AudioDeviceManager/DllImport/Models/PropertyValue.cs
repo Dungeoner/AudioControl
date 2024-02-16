@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace AudioControl.Models
 {
     [StructLayout(LayoutKind.Sequential)]
-    internal struct PROPVARIANT
+    internal struct PropertyValue
     {
         public ushort vt;
         public ushort wReserved1;

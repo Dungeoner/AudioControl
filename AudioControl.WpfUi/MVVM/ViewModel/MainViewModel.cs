@@ -1,4 +1,5 @@
-﻿using AudioControl.WpfUi.Core;
+﻿using AudioControl.Enum;
+using AudioControl.WpfUi.Core;
 using AudioDevice.Utility;
 using AudioDeviceManager;
 using System;
@@ -35,8 +36,8 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
         {
             var deviceManager = new DeviceManager();
             var settingsManager = new SettingsManager();
-            InputDevicesVm = new DeviceCategoryViewModel(deviceManager, settingsManager, DeviceType.Input);
-            OutputDevicesVm = new DeviceCategoryViewModel(deviceManager, settingsManager, DeviceType.Output);
+            InputDevicesVm = new DeviceCategoryViewModel(deviceManager, settingsManager, EDataFlow.eCapture);
+            OutputDevicesVm = new DeviceCategoryViewModel(deviceManager, settingsManager, EDataFlow.eRender);
             InputDevicesCommand = new BaseCommand(e =>
             {
                 CurrentView = InputDevicesVm;

@@ -8,6 +8,7 @@ namespace AudioControl.Intefaces
 {
     public interface IAudioDevice
     {
+        string Id { get; }
         string Name { get; }
         float Gain { get; }
         bool IsMuted { get; }

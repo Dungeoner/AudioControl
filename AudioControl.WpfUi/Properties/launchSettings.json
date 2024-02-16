@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AudioControl.WpfUi": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
