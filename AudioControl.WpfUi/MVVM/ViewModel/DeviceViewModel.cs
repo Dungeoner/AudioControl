@@ -54,9 +54,6 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
                 OnPropertyChanged(nameof(ImageSource));
             }
         }
-
-        public BaseCommand MuteCommand { get; private set; }
-
         public BaseCommand SaveCommand { get; private set; }
 
         public DeviceViewModel(IAudioDevice device, ISettingsManager settingsManager)
@@ -68,10 +65,6 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
            
         public override void Initialize()
         {
-            MuteCommand = new BaseCommand(e =>
-            {
-                IsMuted = !_device.IsMuted;
-            });
             SaveCommand = new BaseCommand(e =>
             {
                 Save();

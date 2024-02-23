@@ -2,7 +2,7 @@
   "profiles": {
     "AudioControl.WpfUi": {
       "commandName": "Project",
-      "nativeDebugging": true
+      "nativeDebugging": false
     }
   }
 }

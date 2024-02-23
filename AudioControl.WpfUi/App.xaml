@@ -6,13 +6,15 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Themes/MenuButtonTheme.xaml"/>
-                <ResourceDictionary Source="Themes/ButtonTheme.xaml"/>
-                <ResourceDictionary Source="Themes/VolumeSliderTheme.xaml"/>
-                <ResourceDictionary Source="Resources/ImageResources.xaml"/>
-                <ResourceDictionary Source="Resources/Convertors.xaml"/>
+                <ResourceDictionary Source="Themes/MenuButtonTheme.xaml" />
+                <ResourceDictionary Source="Themes/SaveButtonTheme.xaml" />
+                <ResourceDictionary Source="Themes/VolumeSliderTheme.xaml" />
+                <ResourceDictionary Source="Resources/ImageResources.xaml" />
+                <ResourceDictionary Source="Resources/Colors.xaml" />
+                <ResourceDictionary Source="Themes/MuteMicCheckBoxTheme.xaml" />
+                <ResourceDictionary Source="Themes/CornerButtonTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
+            
             <DataTemplate DataType="{x:Type viewModel:DeviceCategoryViewModel}">
                 <view:DeviceCategoryView/>
             </DataTemplate>

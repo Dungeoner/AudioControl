@@ -22,6 +22,10 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
 
         public BaseCommand OutputDevicesCommand { get; set; }
 
+        public BaseCommand CloseCommand { get; set; }
+
+        public BaseCommand MinimizeCommand { get ; set; }
+
         public DeviceCategoryViewModel CurrentView
         {
             get => _currentView;
@@ -45,6 +49,14 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
             OutputDevicesCommand = new BaseCommand(e =>
             {
                 CurrentView = OutputDevicesVm;
+            });
+            CloseCommand = new BaseCommand(e =>
+            {
+                App.Current.MainWindow.Hide();
+            });
+            MinimizeCommand = new BaseCommand(e =>
+            {
+                App.Current.MainWindow.WindowState = System.Windows.WindowState.Minimized;
             });
             Initialize();
         }
