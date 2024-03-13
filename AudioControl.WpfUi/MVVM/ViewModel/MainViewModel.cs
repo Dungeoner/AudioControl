@@ -36,10 +36,8 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
             }
         }
 
-        public MainViewModel()
+        public MainViewModel(DeviceManager deviceManager, SettingsManager settingsManager)
         {
-            var deviceManager = new DeviceManager();
-            var settingsManager = new SettingsManager();
             InputDevicesVm = new DeviceCategoryViewModel(deviceManager, settingsManager, EDataFlow.eCapture);
             OutputDevicesVm = new DeviceCategoryViewModel(deviceManager, settingsManager, EDataFlow.eRender);
             InputDevicesCommand = new BaseCommand(e =>

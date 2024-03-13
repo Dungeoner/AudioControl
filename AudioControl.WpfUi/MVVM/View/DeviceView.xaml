@@ -56,8 +56,6 @@
                 ap:ButtonStyleProperties.OnPressedForeground="{StaticResource Color2}"
                 ap:ButtonStyleProperties.Icon="{StaticResource SaveIcon}"
                 Command="{Binding SaveCommand}">
-            <Image Source="{StaticResource SavePng}"
-                   Margin="6"></Image>
         </Button>
     </Grid>
 </UserControl>

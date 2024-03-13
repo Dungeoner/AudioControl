@@ -1,0 +1,16 @@
+﻿<Window x:Class="AudioControl.WpfUi.TrayWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AudioControl.WpfUi"
+        mc:Ignorable="d"
+        Title="TrayWindow" Height="200" Width="400"
+        WindowStartupLocation="Manual"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        AllowsTransparency="True">
+    <Border CornerRadius="10"
+            Background="{StaticResource Color0}"></Border>
+</Window>

@@ -12,10 +12,6 @@
         Background="Transparent"
         AllowsTransparency="True">
 
-    <Window.DataContext>
-        <viewModel:MainViewModel/>
-    </Window.DataContext>
-
     <Border Background="{StaticResource Color0}"
             CornerRadius="10">
 

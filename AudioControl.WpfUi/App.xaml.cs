@@ -1,4 +1,9 @@
-﻿using System.Windows;
+﻿using AudioControl.WpfUi.Core;
+using AudioControl.WpfUi.MVVM.ViewModel;
+using AudioDevice.Utility;
+using AudioDeviceManager;
+using System.Threading;
+using System.Windows;
 using Forms = System.Windows.Forms;
 
 namespace AudioControl.WpfUi
@@ -8,29 +13,25 @@ namespace AudioControl.WpfUi
     /// </summary>
     public partial class App : Application
     {
+        private NotifyIconWrapper _notyfyIconWrapper;
+
         protected override void OnStartup(StartupEventArgs e)
         {
-            SetupNotifyIcon();
+            var deviceManager = new DeviceManager();
+            var settingsManager = new SettingsManager();
+            var mainVm = new MainViewModel(deviceManager, settingsManager);
             this.MainWindow = new MainWindow();
+            MainWindow.DataContext = mainVm;
+            var trayVm = new TrayViewModel(deviceManager);
+            var trayWindow = new TrayWindow();
+            trayWindow.DataContext = trayVm;
+            SetupNotifyIcon(trayWindow);
             this.MainWindow.Show();
             base.OnStartup(e);
-        }
-
-        private void SetupNotifyIcon()
+        } 
+        private void SetupNotifyIcon(TrayWindow trayWindow)
         {
-            Forms.NotifyIcon notifyIcon = new Forms.NotifyIcon();
-            notifyIcon.Icon = new System.Drawing.Icon("Assets/pci-card-sound.ico");
-            notifyIcon.Visible = true;
-            notifyIcon.DoubleClick += NotifyIcon_DoubleClick;
-            notifyIcon.ContextMenuStrip = new Forms.ContextMenuStrip();
-        }
-
-        private void NotifyIcon_DoubleClick(object? sender, System.EventArgs e)
-        {
-            if(this.MainWindow != null && !this.MainWindow.IsVisible)
-            {
-                this.MainWindow.Show();
-            }
+            _notyfyIconWrapper = new NotifyIconWrapper(trayWindow, this.MainWindow);
         }
     }
 }
