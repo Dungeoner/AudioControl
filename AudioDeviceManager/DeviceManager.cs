@@ -10,6 +10,7 @@ using System.Security.Claims;
 using AudioDeviceManager.DllImport;
 using AudioDeviceManager.DllImport.Event;
 using System.Linq.Expressions;
+using AudioDeviceManager.DllImport.Interfaces.IPolicyConfig;
 
 namespace AudioDeviceManager
 {
@@ -18,6 +19,10 @@ namespace AudioDeviceManager
         private readonly MMNotificationClient _notificationClient;
 
         private readonly IMMDeviceEnumerator _devicEnumerator;
+
+        public string DefaultInputDeviceId;
+
+        public string DefaultOutputDeviceId;
 
         public event EventHandler<DeviceNotificationEventArgs> DeviceAdded;
         public event EventHandler<DeviceNotificationEventArgs> DeviceRemoved;
@@ -29,19 +34,6 @@ namespace AudioDeviceManager
             Marshal.ThrowExceptionForHR(_devicEnumerator.RegisterEndpointNotificationCallback(_notificationClient));
             _notificationClient.DeviceAdded += DeviceAdded;
             _notificationClient.DeviceStateChanged += DeviceStateChangedHandler;
-        }
-
-        private void DeviceStateChangedHandler(object? sender, DeviceStateChangedEventArgs e)
-        {
-            if(e.DeviceState == DeviceState.NotPresent ||
-                e.DeviceState == DeviceState.Unplugged ||
-                e.DeviceState == DeviceState.Disabled)
-            {
-                DeviceRemoved?.Invoke(this, e);
-            } else if(e.DeviceState == DeviceState.Active)
-            {
-                DeviceAdded?.Invoke(this, e);
-            }
         }
 
         public IEnumerable<IAudioDevice> ObtainDeviceCollection(EDataFlow edata)
@@ -58,6 +50,42 @@ namespace AudioDeviceManager
                 deviceCollection.Add(new AudioDevice(deviceID, deviceName, immDevice));
             }
             return deviceCollection;
+        }
+
+        public string GetDefaultDeviceId(EDataFlow edata)
+        {
+            Marshal.ThrowExceptionForHR(_devicEnumerator.GetDefaultAudioEndpoint(edata, ERole.eMultimedia, out IMMDevice defaulInputDevice));
+            Marshal.ThrowExceptionForHR(defaulInputDevice.GetId(out string deviceId));
+            return deviceId;
+        }
+
+        public bool SetDefaultDevice(string id, EDataFlow edata)
+        {
+            PolicyConfig.SetDefaultEndpoint(id, ERole.eMultimedia);
+            PolicyConfig.SetDefaultEndpoint(id, ERole.eConsole);
+            PolicyConfig.SetDefaultEndpoint(id, ERole.eCommunications);
+            return true;
+        }
+
+        public IAudioDevice Get(string deviceId)
+        {
+            Marshal.ThrowExceptionForHR(_devicEnumerator.GetDevice(deviceId, out IMMDevice immDevice));
+            var deviceName = GetDeviceName(immDevice);
+            return new AudioDevice(deviceId, deviceName, immDevice);
+        }
+
+        private void DeviceStateChangedHandler(object? sender, DeviceStateChangedEventArgs e)
+        {
+            if (e.DeviceState == DeviceState.NotPresent ||
+                e.DeviceState == DeviceState.Unplugged ||
+                e.DeviceState == DeviceState.Disabled)
+            {
+                DeviceRemoved?.Invoke(this, e);
+            }
+            else if (e.DeviceState == DeviceState.Active)
+            {
+                DeviceAdded?.Invoke(this, e);
+            }
         }
 
         private PropertyValue GetDevicePropertyValue(IMMDevice device, PropertyKey propertyKey)
@@ -83,12 +111,6 @@ namespace AudioDeviceManager
                 pid = (int)EPid.PID_FRIENDLY_NAME
             }).GetValue();
         }
-
-        public IAudioDevice Get(string deviceId)
-        {
-            Marshal.ThrowExceptionForHR(_devicEnumerator.GetDevice(deviceId, out IMMDevice immDevice));
-            var deviceName = GetDeviceName(immDevice);
-            return new AudioDevice(deviceId, deviceName, immDevice);
-        }
+        
     }
 }
