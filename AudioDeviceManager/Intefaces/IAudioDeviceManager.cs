@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,8 +16,13 @@ namespace AudioControl.Intefaces
 
         IAudioDevice Get(string deviceId);
 
+        public string GetDefaultDeviceId(EDataFlow edata);
+
+        public bool SetDefaultDevice(string id, EDataFlow edata);
+
         event EventHandler<DeviceNotificationEventArgs> DeviceAdded;
 
         event EventHandler<DeviceNotificationEventArgs> DeviceRemoved;
+
     }
 }

@@ -7,7 +7,7 @@
         eAll
     }
 
-    internal enum ERole
+    public enum ERole
     {
         eConsole,
         eMultimedia,

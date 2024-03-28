@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AudioDeviceManager": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

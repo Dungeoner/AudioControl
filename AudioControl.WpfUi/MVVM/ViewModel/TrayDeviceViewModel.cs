@@ -11,11 +11,9 @@ using AudioControl.WpfUi.Core;
 
 namespace AudioControl.WpfUi.MVVM.ViewModel
 {
-    public class DeviceViewModel : ViewModelBase
+    public class TrayDeviceViewModel : ViewModelBase
     {
         private readonly IAudioDevice _device;
-
-        private readonly ISettingsManager _settingsManager;
 
         private string _imageSource;
 
@@ -54,46 +52,15 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
                 OnPropertyChanged(nameof(ImageSource));
             }
         }
-        public BaseCommand SaveCommand { get; private set; }
 
-        public DeviceViewModel(IAudioDevice device, ISettingsManager settingsManager)
+        public TrayDeviceViewModel(IAudioDevice device)
         {
             _device = device;
-            _settingsManager = settingsManager;
-            Initialize();
         }
-           
+
         public override void Initialize()
         {
-            SaveCommand = new BaseCommand(e =>
-            {
-                Save();
-            });
-            LoadSettings();
-        }
-
-        public void Save()
-        {
-            var settigsModel = new DeviceSettingsModel
-            {
-                Name = Name,
-                Gain = Gain,
-                IsMuted = IsMuted
-            };
-            _settingsManager.SaveSettings(settigsModel);
-        }
-
-        private void LoadSettings()
-        {
-            var settings = _settingsManager.LoadSettings(_device.Name);
-            if (settings != null)
-            {
-                Gain = settings.Gain;
-                if (_device.IsMuted != settings.IsMuted)
-                {
-                    _device.SetMute(settings.IsMuted);
-                }
-            }
+            throw new NotImplementedException();
         }
     }
 }

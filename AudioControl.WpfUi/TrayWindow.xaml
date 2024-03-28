@@ -1,0 +1,64 @@
+﻿<Window x:Class="AudioControl.WpfUi.TrayWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModel="clr-namespace:AudioControl.WpfUi.MVVM.ViewModel"
+        xmlns:view="clr-namespace:AudioControl.WpfUi.MVVM.View"
+        mc:Ignorable="d"
+        Title="TrayWindow"
+        Height="150"
+        Width="300"
+        WindowStartupLocation="Manual"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        AllowsTransparency="True">
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewModel:DeviceViewModel}">
+            <view:DeviceView />
+        </DataTemplate>
+    </Window.Resources>
+
+    <Border CornerRadius="10"
+            Background="{StaticResource Color1}">
+        <Grid Margin="5, 10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50" />
+                <ColumnDefinition Width="240" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="30" />
+            </Grid.RowDefinitions>
+            <Viewbox HorizontalAlignment="Center"
+                     VerticalAlignment="Center"
+                     Width="42"
+                     Height="42"
+                     Grid.Row="0"
+                     Grid.Column="0">
+                <Path Fill="{StaticResource Color3}"
+                      Data="{StaticResource MicIcon}"></Path>
+            </Viewbox>
+            <Viewbox HorizontalAlignment="Center"
+                     VerticalAlignment="Center"
+                     Width="42"
+                     Height="42"
+                     Grid.Row="1"
+                     Grid.Column="0">
+                <Path Fill="{StaticResource Color3}"
+                      Data="{StaticResource VolIcon}"></Path>
+            </Viewbox>
+            <StackPanel Grid.Column="2"
+                        Grid.RowSpan="2">
+                <view:TrayDeviceView DataContext="{Binding InputDevice}"
+                                     Grid.Row="0"
+                                     Loaded="TrayDeviceView_Loaded" />
+                <view:TrayDeviceView DataContext="{Binding OutputDevice}"
+                                     Grid.Row="1" />
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

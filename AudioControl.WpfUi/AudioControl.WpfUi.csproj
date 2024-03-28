@@ -6,30 +6,25 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationIcon>Assets\pci-card-sound.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Assets\floppy-fill.png" />
-    <None Remove="Assets\floppy-fill.svg" />
+    <None Remove="Assets\floppy-fill-light.png" />
+    <None Remove="Assets\mic-fill-light.png" />
     <None Remove="Assets\mic-fill.png" />
     <None Remove="Assets\mic-mute-fill.png" />
-    <None Remove="Assets\mic-mute-fill.svg" />
     <None Remove="Assets\pci-card-sound.ico" />
-    <None Remove="Assets\pci-card-sound.png" />
-    <None Remove="Assets\pci-card-sound.svg" />
     <None Remove="Assets\volume-up-fill.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Assets\floppy-fill.png">
+    <Content Include="Assets\mic-fill-light.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\mic-mute-fill.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="Assets\mic-fill.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -37,6 +32,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\volume-up-fill.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\mic-mute-fill-lightpng.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
