@@ -36,8 +36,8 @@ namespace AudioControl.WpfUi.Core
             _notifyIcon.Visible = true;
             _notifyIcon.DoubleClick += NotifyIcon_DoubleClick;
             _notifyIcon.MouseClick += NotifyIcon_Click;
-            _timer = new DispatcherTimer(DispatcherPriority.Background, Dispatcher.CurrentDispatcher);
-            _timer.Interval = TimeSpan.FromMilliseconds(10);
+            _timer = new DispatcherTimer(DispatcherPriority.Normal, Dispatcher.CurrentDispatcher);
+            _timer.Interval = TimeSpan.FromMilliseconds(150);
             _timer.Tick += _timer_Tick;
             _notifyIcon.ContextMenuStrip = new ContextMenuStrip();
             var label = new ToolStripLabel();
@@ -82,7 +82,9 @@ namespace AudioControl.WpfUi.Core
             }
             if (!_mainWindow.IsVisible)
             {
+                _mainWindow.Topmost = true;
                 _mainWindow.Show();
+                _mainWindow.Topmost = false;
             }
             else
             {

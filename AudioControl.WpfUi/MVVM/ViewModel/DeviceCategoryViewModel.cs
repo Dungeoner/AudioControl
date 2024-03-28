@@ -21,7 +21,22 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
 
         private readonly EDataFlow _deviceType;
 
+        private DeviceViewModel _selectedDevice;
+
         public ObservableCollection<DeviceViewModel> DeviceVmList { get; set; }
+
+        public DeviceViewModel SelectedDeviceVm
+        {
+            get => _selectedDevice;
+            set
+            {
+                if(_deviceManager.SetDefaultDevice(value.Id, _deviceType))
+                {
+                    _selectedDevice = value;
+                    OnPropertyChanged(nameof(SelectedDeviceVm));
+                }        
+            }
+        }
 
         public DeviceCategoryViewModel(IAudioDeviceManager deviceManager, ISettingsManager settingsMasnager, EDataFlow deviceType)
         {
@@ -38,6 +53,7 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
                 .Select(x => new DeviceViewModel(x, _settingsManager)));
             _deviceManager.DeviceAdded += _deviceManager_DeviceAdded;
             _deviceManager.DeviceRemoved += _deviceManager_DeviceRemoved;
+            _selectedDevice = DeviceVmList.First(x => x.Id == _deviceManager.GetDefaultDeviceId(_deviceType));
         }
 
         private void _deviceManager_DeviceRemoved(object? sender, DeviceNotificationEventArgs e)

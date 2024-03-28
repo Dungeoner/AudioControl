@@ -21,6 +21,7 @@ namespace AudioControl.WpfUi
             var settingsManager = new SettingsManager();
             var mainVm = new MainViewModel(deviceManager, settingsManager);
             this.MainWindow = new MainWindow();
+            this.MainWindow.ResizeMode = ResizeMode.CanMinimize;
             MainWindow.DataContext = mainVm;
             var trayVm = new TrayViewModel(deviceManager);
             var trayWindow = new TrayWindow();

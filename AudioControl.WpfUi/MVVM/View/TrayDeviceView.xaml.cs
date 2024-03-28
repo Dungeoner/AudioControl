@@ -10,25 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AudioControl.WpfUi
+namespace AudioControl.WpfUi.MVVM.View
 {
     /// <summary>
-    /// Interaction logic for TrayWindow.xaml
+    /// Interaction logic for TrayDeviceView.xaml
     /// </summary>
-    public partial class TrayWindow : Window
+    public partial class TrayDeviceView : UserControl
     {
-        public TrayWindow()
+        public TrayDeviceView()
         {
             InitializeComponent();
-            this.Left = SystemParameters.PrimaryScreenWidth - this.Width - 16;
-            this.Top = SystemParameters.WorkArea.Height - this.Height - 16;
-        }
-
-        private void TrayDeviceView_Loaded(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

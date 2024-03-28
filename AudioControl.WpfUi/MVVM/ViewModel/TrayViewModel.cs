@@ -3,6 +3,7 @@ using AudioControl.Intefaces;
 using AudioControl.WpfUi.Core;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,11 +14,11 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
     {
         private readonly IAudioDeviceManager _deviceManager;
 
-        private DeviceViewModel _inputDevice;
+        private TrayDeviceViewModel _inputDevice;
 
-        private DeviceViewModel _outputDevice;
+        private TrayDeviceViewModel _outputDevice;
 
-        public DeviceViewModel InputDevice
+        public TrayDeviceViewModel InputDevice
         {
             get => _inputDevice;
             set
@@ -27,24 +28,34 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
             }
         }
 
-        public DeviceViewModel OutputDevice
+        public TrayDeviceViewModel OutputDevice
         {
             get => _outputDevice;
             set
             {
-                _inputDevice = value;
-                OnPropertyChanged(nameof(InputDevice));
+                _outputDevice = value;
+                OnPropertyChanged(nameof(OutputDevice));
             }
         }
 
         public TrayViewModel(IAudioDeviceManager deviceManager)
         {
             _deviceManager = deviceManager;
+            Initialize();
         }
 
         public override void Initialize()
         {
-            //InputDevice = _deviceManager.ObtainDeviceCollection(EDataFlow.eCapture).FirstOrDefault(x => x.)
+            var devices = _deviceManager.ObtainDeviceCollection(EDataFlow.eAll);
+            InputDevice = GetDefaultDevice(devices, EDataFlow.eCapture);
+            OutputDevice = GetDefaultDevice(devices, EDataFlow.eRender);
+        }
+
+        private TrayDeviceViewModel GetDefaultDevice(IEnumerable<IAudioDevice> devices, EDataFlow eDataFlow)
+        {
+            string defaultDeviceId = _deviceManager.GetDefaultDeviceId(eDataFlow);
+            var defaultDevice = devices.First(x => x.Id == defaultDeviceId);
+            return new TrayDeviceViewModel(defaultDevice);
         }
     }
 }

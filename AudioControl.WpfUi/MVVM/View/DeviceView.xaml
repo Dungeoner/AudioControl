@@ -20,19 +20,20 @@
                    VerticalAlignment="Center"
                    Foreground="#4876d1"
                    FontWeight="SemiBold" />
-        <TextBlock Grid.Column="1"
+        <TextBox Grid.Column="1"
                    FontSize="18"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Center"
                    Foreground="#4876d1"
-                   Text="{Binding Gain, Mode=OneWay}"></TextBlock>
-        <Slider     Width="150"
-                    Height="40"
-                    Maximum="100"
-                    Grid.Column="2"
-                    VerticalAlignment="Center"
-                    Style="{StaticResource VolumeSlider}"
-                    Value="{Binding Gain, Mode=TwoWay}" />
+                   Text="{Binding ElementName=VolumeSlider, Path=Value, Mode=TwoWay}"></TextBox>
+        <Slider    x:Name="VolumeSlider"
+                   Width="150"
+                   Height="40"
+                   Maximum="100"
+                   Grid.Column="2"
+                   VerticalAlignment="Center"
+                   Style="{StaticResource VolumeSlider}"
+                   Value="{Binding Gain, Mode=TwoWay}" />
         <CheckBox x:Name="ButtonMute"
                   Height="42"
                   Width="42"
