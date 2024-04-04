@@ -8,42 +8,17 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows;
 using AudioControl.WpfUi.Core;
+using AudioControl.WpfUi.MVVM.Models;
 
 namespace AudioControl.WpfUi.MVVM.ViewModel
 {
     public class DeviceViewModel : ViewModelBase
     {
-        private readonly IAudioDevice _device;
+        public AudioDeviceModel Device { get;}
 
         private readonly ISettingsManager _settingsManager;
 
         private string _imageSource;
-
-        public string Id => _device.Id;
-
-        public string Name => _device.Name;
-
-        public bool IsMuted
-        {
-            get { return _device.IsMuted; }
-            set
-            {
-                _device.SetMute(value);
-                OnPropertyChanged(nameof(IsMuted));
-            }
-        }
-        public int Gain
-        {
-            get
-            {
-                return Convert.ToInt16(_device.Gain * 100);
-            }
-            set
-            {
-                _device.SetTargetGainForDevice(Convert.ToSingle(value) / 100);
-                OnPropertyChanged(nameof(Gain));
-            }
-        }
 
         public string ImageSource
         {
@@ -56,9 +31,9 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
         }
         public BaseCommand SaveCommand { get; private set; }
 
-        public DeviceViewModel(IAudioDevice device, ISettingsManager settingsManager)
+        public DeviceViewModel(AudioDeviceModel device, ISettingsManager settingsManager)
         {
-            _device = device;
+            Device = device;
             _settingsManager = settingsManager;
             Initialize();
         }
@@ -69,31 +44,17 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
             {
                 Save();
             });
-            LoadSettings();
         }
 
         public void Save()
         {
             var settigsModel = new DeviceSettingsModel
             {
-                Name = Name,
-                Gain = Gain,
-                IsMuted = IsMuted
+                Name = Device.Name,
+                Gain = Device.Gain,
+                IsMuted = Device.IsMuted,
             };
             _settingsManager.SaveSettings(settigsModel);
-        }
-
-        private void LoadSettings()
-        {
-            var settings = _settingsManager.LoadSettings(_device.Name);
-            if (settings != null)
-            {
-                Gain = settings.Gain;
-                if (_device.IsMuted != settings.IsMuted)
-                {
-                    _device.SetMute(settings.IsMuted);
-                }
-            }
         }
     }
 }

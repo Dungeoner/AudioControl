@@ -1,6 +1,7 @@
 ﻿using AudioControl.Enum;
 using AudioControl.Intefaces;
 using AudioControl.WpfUi.Core;
+using AudioControl.WpfUi.Core.Interface;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +13,7 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
 {
     public class TrayViewModel : ViewModelBase
     {
-        private readonly IAudioDeviceManager _deviceManager;
+        private readonly IDeviceProvider _deviceProvider;
 
         private TrayDeviceViewModel _inputDevice;
 
@@ -38,24 +39,18 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
             }
         }
 
-        public TrayViewModel(IAudioDeviceManager deviceManager)
+        public TrayViewModel(IDeviceProvider deviceProvider)
         {
-            _deviceManager = deviceManager;
+            _deviceProvider = deviceProvider;
             Initialize();
         }
 
         public override void Initialize()
         {
-            var devices = _deviceManager.ObtainDeviceCollection(EDataFlow.eAll);
-            InputDevice = GetDefaultDevice(devices, EDataFlow.eCapture);
-            OutputDevice = GetDefaultDevice(devices, EDataFlow.eRender);
-        }
-
-        private TrayDeviceViewModel GetDefaultDevice(IEnumerable<IAudioDevice> devices, EDataFlow eDataFlow)
-        {
-            string defaultDeviceId = _deviceManager.GetDefaultDeviceId(eDataFlow);
-            var defaultDevice = devices.First(x => x.Id == defaultDeviceId);
-            return new TrayDeviceViewModel(defaultDevice);
+            var input = _deviceProvider.GetDefaultDevice(EDataFlow.eCapture);
+            var output = _deviceProvider.GetDefaultDevice(EDataFlow.eRender);
+            InputDevice = new TrayDeviceViewModel(input);
+            OutputDevice = new TrayDeviceViewModel(output);
         }
     }
 }

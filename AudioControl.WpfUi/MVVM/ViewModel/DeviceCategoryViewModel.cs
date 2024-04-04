@@ -1,7 +1,10 @@
 ﻿using AudioControl.Enum;
 using AudioControl.Intefaces;
 using AudioControl.WpfUi.Core;
+using AudioControl.WpfUi.Core.Event;
+using AudioControl.WpfUi.Core.Interface;
 using AudioDevice.Utility;
+using AudioDeviceManager;
 using AudioDeviceManager.DllImport.Event;
 using System;
 using System.Collections.Generic;
@@ -15,7 +18,7 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
 {
     public class DeviceCategoryViewModel : ViewModelBase
     {
-        private readonly IAudioDeviceManager _deviceManager;
+        private readonly IDeviceProvider _deviceProvider;
 
         private readonly ISettingsManager _settingsManager;
 
@@ -30,17 +33,17 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
             get => _selectedDevice;
             set
             {
-                if(_deviceManager.SetDefaultDevice(value.Id, _deviceType))
+                if (_deviceProvider.SetDefaultDevice(value.Device))
                 {
                     _selectedDevice = value;
                     OnPropertyChanged(nameof(SelectedDeviceVm));
-                }        
+                }
             }
         }
 
-        public DeviceCategoryViewModel(IAudioDeviceManager deviceManager, ISettingsManager settingsMasnager, EDataFlow deviceType)
+        public DeviceCategoryViewModel(IDeviceProvider deviceProvider, ISettingsManager settingsMasnager, EDataFlow deviceType)
         {
-            _deviceManager = deviceManager;
+            _deviceProvider = deviceProvider;
             _settingsManager = settingsMasnager;
             _deviceType = deviceType;
             Initialize();
@@ -48,29 +51,32 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
 
         public override void Initialize()
         {
-            var devices = _deviceManager.ObtainDeviceCollection(_deviceType);
+            var devices = _deviceProvider.ObtainDeviceCollection(_deviceType);
             DeviceVmList = new ObservableCollection<DeviceViewModel>(devices
                 .Select(x => new DeviceViewModel(x, _settingsManager)));
-            _deviceManager.DeviceAdded += _deviceManager_DeviceAdded;
-            _deviceManager.DeviceRemoved += _deviceManager_DeviceRemoved;
-            _selectedDevice = DeviceVmList.First(x => x.Id == _deviceManager.GetDefaultDeviceId(_deviceType));
+            _deviceProvider.DeviceAdded += OnDeviceAdded;
+            _deviceProvider.DeviceRemoved += OnDeviceRemoved;
+            var defaultDevice = _deviceProvider.GetDefaultDevice(_deviceType);
+            _selectedDevice = DeviceVmList.First(x => x.Device == defaultDevice);
         }
 
-        private void _deviceManager_DeviceRemoved(object? sender, DeviceNotificationEventArgs e)
+        private void OnDeviceAdded(object? sender, DeviceAddedEventArgs e)
         {
-            System.Windows.Application.Current.Dispatcher.Invoke(delegate
-            {
-                var device = DeviceVmList.FirstOrDefault(x => x.Id == e.DeviceId);
-                if (device != null) { DeviceVmList?.Remove(device); }
-            });
-        }
-
-        private void _deviceManager_DeviceAdded(object? sender, DeviceNotificationEventArgs e)
-        {
-            var device = _deviceManager.Get(e.DeviceId);
+            var device = e.DeviceModel;
+            if (device.DeviceType != _deviceType) return;
             System.Windows.Application.Current.Dispatcher.Invoke(delegate
             {
                 DeviceVmList?.Add(new DeviceViewModel(device, _settingsManager));
+            });
+        }
+
+        private void OnDeviceRemoved(object? sender, DeviceRemovedEventArgs e)
+        {
+            var device = DeviceVmList.FirstOrDefault(x => x.Device.Id == e.DeviceId);
+            if (device == null) return;
+            System.Windows.Application.Current.Dispatcher.Invoke(delegate
+            {
+                DeviceVmList?.Remove(device);
             });
         }
     }

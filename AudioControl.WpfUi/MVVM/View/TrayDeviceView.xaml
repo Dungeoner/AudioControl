@@ -16,14 +16,14 @@
                    VerticalAlignment="Center"
                    HorizontalAlignment="Center"
                    Foreground="#4876d1"
-                   Text="{Binding Gain, Mode=OneWay}"></TextBlock>
+                   Text="{Binding Device.Gain, Mode=OneWay}"></TextBlock>
         <Slider     Width="150"
                     Height="40"
                     Maximum="100"
                     Grid.Column="1"
                     VerticalAlignment="Center"
                     Style="{StaticResource VolumeSlider}"
-                    Value="{Binding Gain, Mode=TwoWay}" />
+                    Value="{Binding Device.Gain, Mode=TwoWay}" />
         <CheckBox x:Name="ButtonMute"
                   Height="42"
                   Width="42"
@@ -31,7 +31,7 @@
                   VerticalAlignment="Center"
                   HorizontalAlignment="Center"
                   Style="{StaticResource MuteMicCheckBoxTheme}"
-                  IsChecked="{Binding IsMuted, Mode=TwoWay}">
+                  IsChecked="{Binding Device.IsMuted, Mode=TwoWay}">
         </CheckBox>
     </Grid>
 </UserControl>
