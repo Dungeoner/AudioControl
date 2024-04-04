@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AudioControl.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,5 +15,6 @@ namespace AudioControl.Intefaces
         bool IsMuted { get; }
         void SetTargetGainForDevice(float gainLevel);
         void SetMute(bool isMute);
+        EDataFlow GetDataFlow();
     }
 }

@@ -103,7 +103,10 @@ internal static class Guids
 	/// </summary>
 	internal const string CResamplerMediaObjectCLSIDString = "f447b69e-1884-4a7e-8055-346f74d6edb3";
 
-	internal const string DeviceFriendlyNameIIDString = "a45c254e-df1c-4efd-8020-67d146a850e0";
+	internal const string IMMEndpointIIDString = "1BE09788-6894-4089-8586-9A2A6C265AC5";
+
+
+    internal const string DeviceFriendlyNameIIDString = "a45c254e-df1c-4efd-8020-67d146a850e0";
 
     internal const string POLICY_CONFIG_CID = "870AF99C-171D-4F9E-AF0D-E63DF40C2BC9";
     internal const string POLICY_CONFIG_VISTA_IID = "568B9108-44BF-40B4-9006-86AFE5B5A620";

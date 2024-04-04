@@ -1,8 +1,11 @@
 ﻿using AudioControl;
+using AudioControl.Enum;
 using AudioControl.Intefaces;
+using AudioDeviceManager.DllImport.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -71,6 +74,13 @@ namespace AudioDeviceManager
             var iAdioEndpointVolume = typeof(IAudioEndpointVolume).GUID;
             _immDevice.Activate(ref iAdioEndpointVolume, 0, IntPtr.Zero, out object endpointVolumeInterface);
             _audioEndpointVolume = (IAudioEndpointVolume)endpointVolumeInterface;
+        }
+
+        public EDataFlow GetDataFlow()
+        {
+            var iMMEndpoint = _immDevice as IMMEndpoint;
+            Marshal.ThrowExceptionForHR(iMMEndpoint.GetDataFlow(out EDataFlow eDataFlow));
+            return eDataFlow;
         }
     }
 }
