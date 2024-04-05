@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using System.Runtime.InteropServices;
-using AudioControl.Enum;
 using AudioControl.Intefaces;
+using AudioDeviceManager.DllImport.Enums;
 
 namespace AudioDeviceManager.DllImport.Interfaces
 {

@@ -1,4 +1,4 @@
-﻿using AudioControl.Enum;
+﻿using AudioDeviceManager.DllImport.Enums;
 using AudioDeviceManager.DllImport.Event;
 using System;
 using System.Collections.Generic;
@@ -24,5 +24,6 @@ namespace AudioControl.Intefaces
 
         event EventHandler<DeviceNotificationEventArgs> DeviceRemoved;
 
+        event EventHandler<DefaultDeviceChangedEventArgs> DefaultDeviceChanged;
     }
 }

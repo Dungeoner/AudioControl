@@ -1,13 +1,7 @@
-﻿using AudioControl.Enum;
-using AudioControl.WpfUi.Core;
+﻿using AudioControl.WpfUi.Core;
 using AudioControl.WpfUi.Core.Interface;
 using AudioDevice.Utility;
-using AudioDeviceManager;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AudioDeviceManager.DllImport.Enums;
 
 namespace AudioControl.WpfUi.MVVM.ViewModel
 {

@@ -1,13 +1,7 @@
-﻿using AudioControl.Enum;
-using AudioControl.Intefaces;
-using AudioControl.WpfUi.Core;
+﻿using AudioControl.WpfUi.Core;
+using AudioControl.WpfUi.Core.Event;
 using AudioControl.WpfUi.Core.Interface;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AudioDeviceManager.DllImport.Enums;
 
 namespace AudioControl.WpfUi.MVVM.ViewModel
 {
@@ -51,6 +45,17 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
             var output = _deviceProvider.GetDefaultDevice(EDataFlow.eRender);
             InputDevice = new TrayDeviceViewModel(input);
             OutputDevice = new TrayDeviceViewModel(output);
+            _deviceProvider.DefaultDeviceChanged += OnDefaultDeviceChanged;
+        }
+
+        private void OnDefaultDeviceChanged(object? sender, DefaultDeviceChangedEventArgs e)
+        {
+            if (e.Device.DeviceType == EDataFlow.eCapture) {
+                InputDevice.Device = e.Device;
+            } else if(e.Device.DeviceType == EDataFlow.eRender)
+            {
+                OutputDevice.Device = e.Device;
+            }
         }
     }
 }

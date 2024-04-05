@@ -1,5 +1,4 @@
 ﻿using AudioControl;
-using AudioControl.Enum;
 using AudioControl.Intefaces;
 using AudioControl.Models;
 using System.Data;
@@ -11,6 +10,7 @@ using AudioDeviceManager.DllImport;
 using AudioDeviceManager.DllImport.Event;
 using System.Linq.Expressions;
 using AudioDeviceManager.DllImport.Interfaces.IPolicyConfig;
+using AudioDeviceManager.DllImport.Enums;
 
 namespace AudioDeviceManager
 {
@@ -26,14 +26,16 @@ namespace AudioDeviceManager
 
         public event EventHandler<DeviceNotificationEventArgs> DeviceAdded;
         public event EventHandler<DeviceNotificationEventArgs> DeviceRemoved;
+        public event EventHandler<DefaultDeviceChangedEventArgs> DefaultDeviceChanged;
 
         public DeviceManager()
         {
             _notificationClient = new MMNotificationClient();
             _devicEnumerator = (IMMDeviceEnumerator)new MMDeviceEnumerator();
             Marshal.ThrowExceptionForHR(_devicEnumerator.RegisterEndpointNotificationCallback(_notificationClient));
-            _notificationClient.DeviceAdded += DeviceAdded;
+            _notificationClient.DeviceAdded += OnDeviceAdded; //DeviceAdded;
             _notificationClient.DeviceStateChanged += DeviceStateChangedHandler;
+            //_notificationClient.DefaultDeviceChanged += DefaultDeviceChanged;
         }
 
         public IEnumerable<IAudioDevice> ObtainDeviceCollection(EDataFlow edata)
@@ -87,6 +89,16 @@ namespace AudioDeviceManager
                 DeviceAdded?.Invoke(this, e);
             }
         }
+
+        private void OnDeviceAdded(object? sender, DeviceNotificationEventArgs e)
+        {
+            DeviceAdded?.Invoke(this, e);
+        }
+
+        //private void OnDefaultDeviceChanged(object? sender, DefaultDeviceChangedEventArgs e)
+        //{
+        //    DefaultDeviceChanged?.Invoke(this, e);
+        //}
 
         private PropertyValue GetDevicePropertyValue(IMMDevice device, PropertyKey propertyKey)
         {

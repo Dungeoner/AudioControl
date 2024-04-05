@@ -1,5 +1,5 @@
 ﻿using System.Runtime.InteropServices;
-using AudioControl.Enum;
+using AudioDeviceManager.DllImport.Enums;
 
 namespace AudioControl.Intefaces
 {

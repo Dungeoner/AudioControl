@@ -1,4 +1,4 @@
-﻿using AudioControl.Enum;
+﻿using AudioDeviceManager.DllImport.Enums;
 using AudioDeviceManager.DllImport.Interfaces.IPolicyConfig;
 using AudioSwitcher.AudioApi.CoreAudio.Interfaces;
 using System;

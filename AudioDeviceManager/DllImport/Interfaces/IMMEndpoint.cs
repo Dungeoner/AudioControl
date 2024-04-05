@@ -1,5 +1,5 @@
-﻿using AudioControl.Enum;
-using AudioControl.Intefaces;
+﻿using AudioControl.Intefaces;
+using AudioDeviceManager.DllImport.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;

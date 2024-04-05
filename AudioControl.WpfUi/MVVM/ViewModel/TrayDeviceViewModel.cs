@@ -14,7 +14,7 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
 {
     public class TrayDeviceViewModel : ViewModelBase
     {
-        public AudioDeviceModel Device { get; }
+        private AudioDeviceModel _device;
 
         private string _imageSource;
 
@@ -25,6 +25,15 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
             {
                 _imageSource = value;
                 OnPropertyChanged(nameof(ImageSource));
+            }
+        }
+
+        public AudioDeviceModel Device{
+            get { return _device; }
+            set
+            {
+                _device = value;
+                OnPropertyChanged(nameof(Device));
             }
         }
 

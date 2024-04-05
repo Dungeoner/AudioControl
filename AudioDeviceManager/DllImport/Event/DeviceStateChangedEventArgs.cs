@@ -1,4 +1,4 @@
-﻿using AudioControl.Enum;
+﻿using AudioDeviceManager.DllImport.Enums;
 
 namespace AudioDeviceManager.DllImport.Event
 {

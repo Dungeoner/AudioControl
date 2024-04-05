@@ -1,6 +1,7 @@
-﻿using AudioControl.Enum;
-using AudioControl.WpfUi.Core.Event;
+﻿using AudioControl.WpfUi.Core.Event;
 using AudioControl.WpfUi.MVVM.Models;
+using AudioDeviceManager.DllImport.Enums;
+using AudioDeviceManager.DllImport.Event;
 using System;
 using System.Collections.Generic;
 
@@ -17,5 +18,7 @@ namespace AudioControl.WpfUi.Core.Interface
         event EventHandler<DeviceAddedEventArgs> DeviceAdded;
 
         event EventHandler<DeviceRemovedEventArgs> DeviceRemoved;
+
+        event EventHandler<Event.DefaultDeviceChangedEventArgs> DefaultDeviceChanged;
     }
 }

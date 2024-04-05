@@ -1,16 +1,14 @@
-﻿using AudioControl.Enum;
-using AudioControl.Intefaces;
+﻿using AudioControl.Intefaces;
 using AudioControl.WpfUi.Core.Event;
 using AudioControl.WpfUi.Core.Interface;
 using AudioControl.WpfUi.MVVM.Models;
 using AudioDevice.Utility;
+using AudioDeviceManager.DllImport.Enums;
 using AudioDeviceManager.DllImport.Event;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace AudioControl.WpfUi.Core
 {
@@ -27,12 +25,16 @@ namespace AudioControl.WpfUi.Core
             _deviceManager = deviceManager;
             _settingsManager = settingsManager;
             _deviceManager.DeviceRemoved += OnDeviceRemoved;
+            _deviceManager.DeviceAdded += OnDeviceAdded; 
+            //_deviceManager.DefaultDeviceChanged += OnDefaultDeviceChanged;
             _devices = LoadDevices();
         }
 
         public event EventHandler<DeviceAddedEventArgs> DeviceAdded;
 
         public event EventHandler<DeviceRemovedEventArgs> DeviceRemoved;
+
+        public event EventHandler<Core.Event.DefaultDeviceChangedEventArgs> DefaultDeviceChanged;
 
         public AudioDeviceModel GetDefaultDevice(EDataFlow edata)
         {
@@ -47,7 +49,11 @@ namespace AudioControl.WpfUi.Core
 
         public bool SetDefaultDevice(AudioDeviceModel device)
         {
-            return _deviceManager.SetDefaultDevice(device.Id, device.DeviceType);
+            var result = _deviceManager.SetDefaultDevice(device.Id, device.DeviceType);
+            if (result) {
+                DefaultDeviceChanged?.Invoke(this, new Event.DefaultDeviceChangedEventArgs(device));
+            }
+            return result;
         }
 
         private void OnDeviceRemoved(object? sender, DeviceNotificationEventArgs e)
@@ -65,6 +71,11 @@ namespace AudioControl.WpfUi.Core
             _devices.Add(deviceModel);
             DeviceAdded?.Invoke(this, new DeviceAddedEventArgs(deviceModel));
         }
+
+        //private void OnDefaultDeviceChanged(object? sender, DefaultDeviceChangedEventArgs e)
+        //{
+        //    DefaultDeviceChanged?.Invoke(this, e);
+        //}
 
         private List<AudioDeviceModel> LoadDevices()
         {

@@ -1,13 +1,8 @@
 ﻿using AudioControl;
-using AudioControl.Enum;
 using AudioControl.Intefaces;
+using AudioDeviceManager.DllImport.Enums;
 using AudioDeviceManager.DllImport.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AudioDeviceManager
 {

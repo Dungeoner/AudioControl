@@ -1,4 +1,4 @@
-﻿using AudioControl.Enum;
+﻿using AudioDeviceManager.DllImport.Enums;
 using AudioDeviceManager.DllImport.Models;
 using System;
 using System.Runtime.InteropServices;

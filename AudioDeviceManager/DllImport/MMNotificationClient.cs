@@ -1,5 +1,5 @@
-﻿using AudioControl.Enum;
-using AudioControl.Models;
+﻿using AudioControl.Models;
+using AudioDeviceManager.DllImport.Enums;
 using AudioDeviceManager.DllImport.Event;
 using AudioDeviceManager.DllImport.Interfaces;
 using System.Runtime.InteropServices;

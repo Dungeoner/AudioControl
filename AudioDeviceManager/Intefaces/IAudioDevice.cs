@@ -1,4 +1,4 @@
-﻿using AudioControl.Enum;
+﻿using AudioDeviceManager.DllImport.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;

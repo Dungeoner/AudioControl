@@ -1,8 +1,8 @@
-﻿using AudioControl.Enum;
+﻿using AudioDeviceManager.DllImport.Enums;
 
 namespace AudioDeviceManager.DllImport.Event
 {
-    internal class DefaultDeviceChangedEventArgs : DeviceNotificationEventArgs
+    public class DefaultDeviceChangedEventArgs : DeviceNotificationEventArgs
     {
         internal EDataFlow DataFlow { get; private set; }
         internal ERole Role { get; private set; }
