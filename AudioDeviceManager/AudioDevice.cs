@@ -10,6 +10,7 @@ namespace AudioDeviceManager
     {
         private readonly IMMDevice _immDevice;
         private IAudioEndpointVolume _audioEndpointVolume;
+        private bool _stopCallback;
         internal AudioEndpointVolumeCallback DeviceCallback { get;}
         internal AudioDevice(string id, string name, IMMDevice device) { 
             Id = id;
@@ -47,13 +48,15 @@ namespace AudioDeviceManager
 
         public void SetTargetGainForDevice(float gainLevel)
         {
-            
             _audioEndpointVolume.SetMasterVolumeLevelScalar(gainLevel, Guid.Empty);
             DeviceCallback.OnNotifyCallback = (notificationData) =>
             {
-                if (notificationData.fMasterVolume != gainLevel)
+                if (!_stopCallback)
                 {
+                    _stopCallback = true;
                     _audioEndpointVolume.SetMasterVolumeLevelScalar(gainLevel, Guid.Empty);
+                    Thread.Sleep(100);
+                    _stopCallback = false;
                 }
             };
             _audioEndpointVolume.RegisterControlChangeNotify(DeviceCallback);
