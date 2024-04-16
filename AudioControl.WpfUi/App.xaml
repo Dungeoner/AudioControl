@@ -13,6 +13,7 @@
                 <ResourceDictionary Source="Resources/Colors.xaml" />
                 <ResourceDictionary Source="Themes/MuteMicCheckBoxTheme.xaml" />
                 <ResourceDictionary Source="Themes/CornerButtonTemplate.xaml" />
+                <ResourceDictionary Source="Resources/GeometryIcons.xaml" />
             </ResourceDictionary.MergedDictionaries>
             
             <DataTemplate DataType="{x:Type viewModel:DeviceCategoryViewModel}">

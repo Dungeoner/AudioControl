@@ -16,15 +16,17 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
     {
         private AudioDeviceModel _device;
 
-        private string _imageSource;
+        private readonly MuteIconProvider _muteIconSource;
 
-        public string ImageSource
+        private Geometry _icon;
+
+        public Geometry Icon
         {
-            get { return _imageSource; }
+            get { return _icon; }
             set
             {
-                _imageSource = value;
-                OnPropertyChanged(nameof(ImageSource));
+                _icon = value;
+                OnPropertyChanged(nameof(Icon));
             }
         }
 
@@ -37,14 +39,28 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
             }
         }
 
-        public TrayDeviceViewModel(AudioDeviceModel device)
+        public BaseCommand MuteCommand { get; private set; }
+
+        public TrayDeviceViewModel(AudioDeviceModel device, MuteIconProvider muteIconSource)
         {
             Device = device;
+            _muteIconSource = muteIconSource;
+            Icon = Device.IsMuted ? _muteIconSource.IconMuted : _muteIconSource.IconUnmuted;
             Initialize();
         }
 
         public override void Initialize()
         {
+            MuteCommand = new BaseCommand(e =>
+            {
+                Mute();
+            });
+        }
+
+        private void Mute()
+        {
+            Device.IsMuted = !Device.IsMuted;
+            Icon = Device.IsMuted ? _muteIconSource.IconMuted : _muteIconSource.IconUnmuted;
         }
     }
 }

@@ -16,6 +16,8 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
 
         private readonly EDataFlow _deviceFlow;
 
+        private MuteIconProvider _muteIconProvider;
+
         private DeviceViewModel _selectedDevice;
 
         public ObservableCollection<DeviceViewModel> DeviceVmList { get; set; }
@@ -44,8 +46,9 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
         public override void Initialize()
         {
             var devices = _deviceProvider.ObtainDeviceCollection(_deviceFlow);
+            _muteIconProvider = new MuteIconProvider(_deviceFlow);
             DeviceVmList = new ObservableCollection<DeviceViewModel>(devices
-                .Select(x => new DeviceViewModel(x, _settingsManager)));
+                .Select(x => new DeviceViewModel(x, _settingsManager, _muteIconProvider)));
             _deviceProvider.DeviceAdded += OnDeviceAdded;
             _deviceProvider.DeviceRemoved += OnDeviceRemoved;
             var defaultDevice = _deviceProvider.GetDefaultDevice(_deviceFlow);
@@ -58,7 +61,7 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
             if (device.DeviceType != _deviceFlow) return;
             System.Windows.Application.Current.Dispatcher.Invoke(delegate
             {
-                DeviceVmList?.Add(new DeviceViewModel(device, _settingsManager));
+                DeviceVmList?.Add(new DeviceViewModel(device, _settingsManager, _muteIconProvider));
             });
         }
 

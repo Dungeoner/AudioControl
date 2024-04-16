@@ -49,4 +49,8 @@
     <ProjectReference Include="..\AudioDeviceManager\AudioDeviceManager.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="StringResources\" />
+  </ItemGroup>
+
 </Project>

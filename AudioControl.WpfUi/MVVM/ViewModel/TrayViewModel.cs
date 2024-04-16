@@ -43,8 +43,8 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
         {
             var input = _deviceProvider.GetDefaultDevice(EDataFlow.eCapture);
             var output = _deviceProvider.GetDefaultDevice(EDataFlow.eRender);
-            InputDevice = new TrayDeviceViewModel(input);
-            OutputDevice = new TrayDeviceViewModel(output);
+            InputDevice = new TrayDeviceViewModel(input, new MuteIconProvider(EDataFlow.eCapture));
+            OutputDevice = new TrayDeviceViewModel(output, new MuteIconProvider(EDataFlow.eRender));
             _deviceProvider.DefaultDeviceChanged += OnDefaultDeviceChanged;
         }
 

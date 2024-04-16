@@ -8,7 +8,7 @@
     <Grid Height="50"
           Width="650">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="357" />
+            <ColumnDefinition Width="360" />
             <ColumnDefinition Width="30" />
             <ColumnDefinition Width="160" />
             <ColumnDefinition Width="50" />
@@ -32,18 +32,23 @@
                    Maximum="100"
                    Grid.Column="2"
                    VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
                    Style="{StaticResource VolumeSlider}"
                    Value="{Binding Device.Gain, Mode=TwoWay}" />
-        <CheckBox x:Name="ButtonMute"
-                  Height="42"
-                  Width="42"
-                  Grid.Column="3"
-                  VerticalAlignment="Center"
-                  HorizontalAlignment="Center"
-                  Style="{StaticResource MuteMicCheckBoxTheme}"
-                  IsChecked="{Binding Device.IsMuted, Mode=TwoWay}">
-
-        </CheckBox>
+        <Button Template="{StaticResource CornerButtonTemplate}"
+                Height="42"
+                Width="42"
+                Grid.Column="3"
+                Foreground="{StaticResource Color3}"
+                Background="Transparent"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                ap:ButtonStyleProperties.OnMoouseOverForeground="{StaticResource Color4}"
+                ap:ButtonStyleProperties.OnMouseOverBackground="Transparent"
+                ap:ButtonStyleProperties.OnPressedForeground="{StaticResource Color2}"
+                ap:ButtonStyleProperties.Icon="{Binding Icon}"
+                Command="{Binding MuteCommand}">
+        </Button>
         <Button Template="{StaticResource CornerButtonTemplate}"
                 Height="42"
                 Width="42"
@@ -51,11 +56,12 @@
                 Foreground="{StaticResource Color3}"
                 Background="Transparent"
                 VerticalAlignment="Center"
-                HorizontalAlignment="Right"
+                HorizontalAlignment="Center"
                 ap:ButtonStyleProperties.OnMoouseOverForeground="{StaticResource Color4}"
                 ap:ButtonStyleProperties.OnMouseOverBackground="Transparent"
                 ap:ButtonStyleProperties.OnPressedForeground="{StaticResource Color2}"
                 ap:ButtonStyleProperties.Icon="{StaticResource SaveIcon}"
+                
                 Command="{Binding SaveCommand}">
         </Button>
     </Grid>

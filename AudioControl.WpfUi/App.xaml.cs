@@ -21,6 +21,10 @@ namespace AudioControl.WpfUi
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            this.MainWindow = new MainWindow();
+            this.MainWindow.ResizeMode = ResizeMode.CanMinimize;
+            this.InitializeComponent();
+
             var container = new WindsorContainer();
             container.Register(Component.For<MainViewModel>());
             container.Register(Component.For<TrayViewModel>());
@@ -29,9 +33,6 @@ namespace AudioControl.WpfUi
             container.Register(Component.For<ISettingsManager>().ImplementedBy<SettingsManager>());
 
             var mainVm = container.Resolve<MainViewModel>();
-
-            this.MainWindow = new MainWindow();
-            this.MainWindow.ResizeMode = ResizeMode.CanMinimize;
             MainWindow.DataContext = mainVm;
 
             var trayVm = container.Resolve<TrayViewModel>();

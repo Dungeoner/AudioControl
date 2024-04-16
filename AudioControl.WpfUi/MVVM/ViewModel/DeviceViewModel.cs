@@ -18,23 +18,30 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
 
         private readonly ISettingsManager _settingsManager;
 
-        private string _imageSource;
+        private readonly MuteIconProvider _muteIconSource;
 
-        public string ImageSource
+        private Geometry _icon;
+
+        public Geometry Icon
         {
-            get { return _imageSource; }
+            get { return _icon; }
             set
             {
-                _imageSource = value;
-                OnPropertyChanged(nameof(ImageSource));
+                _icon = value;
+                OnPropertyChanged(nameof(Icon));
             }
         }
+
         public BaseCommand SaveCommand { get; private set; }
 
-        public DeviceViewModel(AudioDeviceModel device, ISettingsManager settingsManager)
+        public BaseCommand MuteCommand { get; private set; }
+
+        public DeviceViewModel(AudioDeviceModel device, ISettingsManager settingsManager, MuteIconProvider muteIconSource)
         {
             Device = device;
             _settingsManager = settingsManager;
+            _muteIconSource = muteIconSource;
+            Icon = Device.IsMuted ? _muteIconSource.IconMuted : _muteIconSource.IconUnmuted;
             Initialize();
         }
            
@@ -44,9 +51,20 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
             {
                 Save();
             });
+
+            MuteCommand = new BaseCommand(e =>
+            {
+                Mute();
+            });
         }
 
-        public void Save()
+        private void Mute()
+        {
+            Device.IsMuted = !Device.IsMuted;
+            Icon = Device.IsMuted ? _muteIconSource.IconMuted : _muteIconSource.IconUnmuted;
+        }
+
+        private void Save()
         {
             var settigsModel = new DeviceSettingsModel
             {
