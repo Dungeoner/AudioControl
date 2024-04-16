@@ -23,7 +23,6 @@ namespace AudioControl.WpfUi
         {
             this.MainWindow = new MainWindow();
             this.MainWindow.ResizeMode = ResizeMode.CanMinimize;
-            this.InitializeComponent();
 
             var container = new WindsorContainer();
             container.Register(Component.For<MainViewModel>());

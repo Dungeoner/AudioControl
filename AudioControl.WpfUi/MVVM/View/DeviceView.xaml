@@ -62,7 +62,8 @@
                 ap:ButtonStyleProperties.OnPressedForeground="{StaticResource Color2}"
                 ap:ButtonStyleProperties.Icon="{StaticResource SaveIcon}"
                 
-                Command="{Binding SaveCommand}">
+                Command="{Binding SaveCommand}"
+                CommandParameter="{Binding Device}">
         </Button>
     </Grid>
 </UserControl>
