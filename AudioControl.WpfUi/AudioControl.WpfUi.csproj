@@ -10,31 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Assets\floppy-fill-light.png" />
-    <None Remove="Assets\mic-fill-light.png" />
-    <None Remove="Assets\mic-fill.png" />
-    <None Remove="Assets\mic-mute-fill.png" />
     <None Remove="Assets\pci-card-sound.ico" />
-    <None Remove="Assets\volume-up-fill.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Assets\mic-fill-light.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\mic-mute-fill.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\mic-fill.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Assets\pci-card-sound.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\volume-up-fill.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\mic-mute-fill-lightpng.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

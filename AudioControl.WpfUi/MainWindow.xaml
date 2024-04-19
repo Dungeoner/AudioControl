@@ -3,8 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:viewModel="clr-namespace:AudioControl.WpfUi.MVVM.ViewModel"
-        xmlns:ap="clr-namespace:AudioControl.WpfUi.AttachedProperties"
+        xmlns:controls="clr-namespace:AudioControl.WpfUi.Core.Controls"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         WindowStyle="None"
@@ -30,30 +29,16 @@
                         Grid.Column="1"
                         HorizontalAlignment="Right"
                         Margin="0, 5, 5, 2">
-                <Button Template="{StaticResource CornerButtonTemplate}"
-                        Width="30"
-                        Height="20"
-                        Background="{StaticResource Color0}"
-                        Foreground="{StaticResource Color2}"
-                        ap:ButtonStyleProperties.Icon="{StaticResource MinimizeIcon}"
-                        ap:ButtonStyleProperties.OnMoouseOverForeground="{StaticResource Color4}"
-                        ap:ButtonStyleProperties.OnMouseOverBackground="{StaticResource Color1}"
-                        ap:ButtonStyleProperties.OnPressedBackground="{StaticResource Color2}"
-                        ap:ButtonStyleProperties.OnPressedForeground="{StaticResource Color4}"
-                        Command="{Binding MinimizeCommand}"/>
-                <Button Template="{StaticResource CornerButtonTemplate}"
-                        Width="30"
-                        Height="20"
-                        Background="{StaticResource Color0}"
-                        Foreground="{StaticResource Color2}"
-                        ap:ButtonStyleProperties.Icon="{StaticResource CloseIcon}"
-                        ap:ButtonStyleProperties.CornerRadius="0, 6, 0, 0"
-                        ap:ButtonStyleProperties.OnMoouseOverForeground="{StaticResource Color4}"
-                        ap:ButtonStyleProperties.OnMouseOverBackground="{StaticResource Color1}"
-                        ap:ButtonStyleProperties.OnPressedBackground="{StaticResource Color2}"
-                        ap:ButtonStyleProperties.OnPressedForeground="{StaticResource Color4}"
-                        Command="{Binding CloseCommand}">
-                </Button>
+                <controls:RoundedButton Width="30"
+                                        Height="20"
+                                        Icon="{StaticResource MinimizeIcon}"
+                                        Style="{StaticResource WindowButtonTheme}"
+                                        Command="{Binding MinimizeCommand}" />
+                <controls:RoundedButton Width="30"
+                                        Height="20"
+                                        Icon="{StaticResource CloseIcon}"
+                                        Style="{StaticResource WindowButtonTheme}"
+                                        Command="{Binding CloseCommand}" />
             </StackPanel>
 
             <StackPanel Grid.Column="0"
