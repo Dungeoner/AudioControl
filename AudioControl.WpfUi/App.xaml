@@ -9,7 +9,6 @@
                 <ResourceDictionary Source="Themes/MenuButtonTheme.xaml" />
                 <ResourceDictionary Source="Themes/SaveButtonTheme.xaml" />
                 <ResourceDictionary Source="Themes/VolumeSliderTheme.xaml" />
-                <ResourceDictionary Source="Resources/ImageResources.xaml" />
                 <ResourceDictionary Source="Resources/Colors.xaml" />
                 <ResourceDictionary Source="Themes/CornerButtonTemplate.xaml" />
                 <ResourceDictionary Source="Resources/GeometryIcons.xaml" />

@@ -66,8 +66,10 @@
                     Style="{StaticResource MenuButtonTheme}"
                     Command="{Binding InputDevicesCommand}">
                     <RadioButton.Content>
-                        <Image Source="{StaticResource MicPng}"
-                               Margin="8"/>
+                        <Viewbox Margin="8">
+                            <Path Fill="{StaticResource Color3}"
+                                  Data="{StaticResource MicIcon}" />
+                        </Viewbox>
                     </RadioButton.Content>
                 </RadioButton>
                 <RadioButton
@@ -77,8 +79,10 @@
                     Style="{StaticResource MenuButtonTheme}"
                     Command="{Binding OutputDevicesCommand}">
                     <RadioButton.Content>
-                        <Image Source="Assets/volume-up-fill.png"
-                               Margin="8"/>
+                        <Viewbox Margin="8">
+                            <Path Fill="{StaticResource Color3}"
+                                  Data="{StaticResource VolIcon}" />
+                        </Viewbox>
                     </RadioButton.Content>
                 </RadioButton>
             </StackPanel>
