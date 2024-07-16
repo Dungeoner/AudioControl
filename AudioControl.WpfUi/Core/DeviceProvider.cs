@@ -49,7 +49,6 @@ namespace AudioControl.WpfUi.Core
 
         public bool SetDefaultDevice(AudioDeviceModel device)
         {
-            SupressInputMuting();
             var result = _deviceManager.SetDefaultDevice(device.Id, device.DeviceType);
             if (result) {
                 DefaultDeviceChanged?.Invoke(this, new Event.DefaultDeviceChangedEventArgs(device));
@@ -96,18 +95,6 @@ namespace AudioControl.WpfUi.Core
                 deviceModelList.Add(deviceModel);
             }
             return deviceModelList;
-        }
-
-        private void SupressInputMuting()
-        {
-            var defaultInput = GetDefaultDevice(EDataFlow.eCapture);
-            if (!defaultInput.IsMuted)
-            {
-                DefaultDeviceChanged += (_, _) =>
-                {
-                    defaultInput.IsMuted = false;
-                };
-            }
         }
     }
 }

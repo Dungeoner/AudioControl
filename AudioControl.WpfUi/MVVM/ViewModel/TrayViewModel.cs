@@ -51,10 +51,10 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
         private void OnDefaultDeviceChanged(object? sender, DefaultDeviceChangedEventArgs e)
         {
             if (e.Device.DeviceType == EDataFlow.eCapture) {
-                InputDevice.Device = e.Device;
+                InputDevice = new TrayDeviceViewModel(e.Device, new MuteIconProvider(EDataFlow.eCapture));
             } else if(e.Device.DeviceType == EDataFlow.eRender)
             {
-                OutputDevice.Device = e.Device;
+                OutputDevice = new TrayDeviceViewModel(e.Device, new MuteIconProvider(EDataFlow.eRender));
             }
         }
     }
