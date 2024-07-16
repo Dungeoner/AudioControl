@@ -11,16 +11,13 @@ namespace AudioDeviceManager
         private readonly IMMDevice _immDevice;
         private IAudioEndpointVolume _audioEndpointVolume;
         private bool _stopCallback;
-        internal AudioEndpointVolumeCallback DeviceCallback { get;}
-        internal AudioDevice(string id, string name, IMMDevice device) { 
-            Id = id;
-            Name = name;
-            _immDevice = device;
-            DeviceCallback = new AudioEndpointVolumeCallback();
-            ActivateEndpoint();
-        }
+        private bool _isMuted;
+        private float _targetGain;
+        internal AudioEndpointVolumeCallback DeviceCallback { get; }
+
         public string Name { get; }
-        public float Gain {
+        public float Gain
+        {
             get
             {
                 var result = _audioEndpointVolume.GetMasterVolumeLevelScalar(out float gainLevel);
@@ -46,24 +43,26 @@ namespace AudioDeviceManager
 
         public string Id { get; }
 
+        internal AudioDevice(string id, string name, IMMDevice device)
+        {
+            Id = id;
+            Name = name;
+            _immDevice = device;
+            DeviceCallback = new AudioEndpointVolumeCallback();
+            ActivateEndpoint();
+        }
+
         public void SetTargetGainForDevice(float gainLevel)
         {
             _audioEndpointVolume.SetMasterVolumeLevelScalar(gainLevel, Guid.Empty);
-            DeviceCallback.OnNotifyCallback = (notificationData) =>
-            {
-                if (!_stopCallback)
-                {
-                    _stopCallback = true;
-                    _audioEndpointVolume.SetMasterVolumeLevelScalar(gainLevel, Guid.Empty);
-                    Thread.Sleep(100);
-                    _stopCallback = false;
-                }
-            };
+            _targetGain = gainLevel;
+
             _audioEndpointVolume.RegisterControlChangeNotify(DeviceCallback);
         }
 
         public void SetMute(bool isMute)
         {
+            _isMuted = isMute;
             _audioEndpointVolume.SetMute(isMute, Guid.Empty);
         }
 
@@ -72,6 +71,7 @@ namespace AudioDeviceManager
             var iAdioEndpointVolume = typeof(IAudioEndpointVolume).GUID;
             _immDevice.Activate(ref iAdioEndpointVolume, 0, IntPtr.Zero, out object endpointVolumeInterface);
             _audioEndpointVolume = (IAudioEndpointVolume)endpointVolumeInterface;
+            DeviceCallback.OnNotifyCallback = OnNotifyCallBack;
         }
 
         public EDataFlow GetDataFlow()
@@ -79,6 +79,26 @@ namespace AudioDeviceManager
             var iMMEndpoint = _immDevice as IMMEndpoint;
             Marshal.ThrowExceptionForHR(iMMEndpoint.GetDataFlow(out EDataFlow eDataFlow));
             return eDataFlow;
+        }
+
+        private void OnNotifyCallBack(AUDIO_VOLUME_NOTIFICATION_DATA notificationData)
+        {
+            if (notificationData.bMuted != _isMuted)
+            {
+                SetMute(_isMuted);
+                return;
+            }
+
+            if (_stopCallback)
+                return;
+
+            _stopCallback = true;
+            if (notificationData.fMasterVolume != _targetGain)
+                _audioEndpointVolume.SetMasterVolumeLevelScalar(_targetGain, Guid.Empty);
+
+
+            Thread.Sleep(100);
+            _stopCallback = false;
         }
     }
 }

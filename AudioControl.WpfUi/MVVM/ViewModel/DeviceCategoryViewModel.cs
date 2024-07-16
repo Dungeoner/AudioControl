@@ -16,13 +16,13 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
 
         private MuteIconProvider _muteIconProvider;
 
-        private DeviceViewModel _selectedDevice;
+        private MainDeviceViewModel _selectedDevice;
 
-        private SaveCommand _saveCommand;
+        private ISettingsManager _settingsManager { get;}
 
-        public ObservableCollection<DeviceViewModel> DeviceVmList { get; set; }
+        public ObservableCollection<MainDeviceViewModel> DeviceVmList { get; set; }
 
-        public DeviceViewModel SelectedDeviceVm
+        public MainDeviceViewModel SelectedDeviceVm
         {
             get => _selectedDevice;
             set
@@ -39,7 +39,7 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
         {
             _deviceProvider = deviceProvider;
             _deviceFlow = deviceFlow;
-            _saveCommand = new SaveCommand(settingsManager);
+            _settingsManager = settingsManager;
             Initialize();
         }
 
@@ -47,8 +47,8 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
         {
             var devices = _deviceProvider.ObtainDeviceCollection(_deviceFlow);
             _muteIconProvider = new MuteIconProvider(_deviceFlow);
-            DeviceVmList = new ObservableCollection<DeviceViewModel>(devices
-                .Select(x => new MainDeviceViewModel(x, _saveCommand, _muteIconProvider)));
+            DeviceVmList = new ObservableCollection<MainDeviceViewModel>(devices
+                .Select(x => new MainDeviceViewModel(x, _muteIconProvider, _settingsManager)));
             _deviceProvider.DeviceAdded += OnDeviceAdded;
             _deviceProvider.DeviceRemoved += OnDeviceRemoved;
             var defaultDevice = _deviceProvider.GetDefaultDevice(_deviceFlow);
@@ -61,7 +61,7 @@ namespace AudioControl.WpfUi.MVVM.ViewModel
             if (device.DeviceType != _deviceFlow) return;
             System.Windows.Application.Current.Dispatcher.Invoke(delegate
             {
-                DeviceVmList?.Add(new MainDeviceViewModel(device, _saveCommand, _muteIconProvider));
+                DeviceVmList?.Add(new MainDeviceViewModel(device, _muteIconProvider, _settingsManager));
             });
         }
 

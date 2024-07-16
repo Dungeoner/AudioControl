@@ -20,7 +20,7 @@ namespace AudioDevice.Utility
             return null;
         }
 
-        public void SaveSettings(DeviceSettingsModel settigsModel)
+        public bool SaveSettings(DeviceSettingsModel settigsModel)
         {
             var settingsList = ReadSettingsFile();
             var existingSettingModel = settingsList.FirstOrDefault(x => x.Name.Equals(settigsModel.Name));
@@ -33,9 +33,16 @@ namespace AudioDevice.Utility
             {
                 settingsList.Add(settigsModel);
             }
-            var serializedList = JsonSerializer.Serialize(settingsList);
-            using var writer = new StreamWriter(StringResources.SettingsFilePath, false);
-            writer.Write(serializedList);
+            try
+            {
+                var serializedList = JsonSerializer.Serialize(settingsList);
+                using var writer = new StreamWriter(StringResources.SettingsFilePath, false);
+                writer.Write(serializedList);
+                return true;
+            } catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         private List<DeviceSettingsModel> ReadSettingsFile()

@@ -2,7 +2,7 @@
 {
     public interface ISettingsManager
     {
-        void SaveSettings(DeviceSettingsModel settigsModel);
+        bool SaveSettings(DeviceSettingsModel settigsModel);
         DeviceSettingsModel LoadSettings(string DeviceName);
     }
 }
